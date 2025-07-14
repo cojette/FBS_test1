@@ -3,7 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: 'VeriSend Dashboard',
+  title: 'Berry Pie Dashboard',
   description: 'Video validation and distribution dashboard for insurance products.',
 };
 

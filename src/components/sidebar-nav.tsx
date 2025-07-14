@@ -14,7 +14,6 @@ import {
   ClipboardCheck,
   Share2,
   Trophy,
-  ShieldCheck,
   Settings,
   LogOut,
 } from "lucide-react";
@@ -24,9 +23,11 @@ export function SidebarNav() {
     <>
       <SidebarHeader className="border-b border-sidebar-border">
         <div className="flex items-center gap-2 p-1">
-          <ShieldCheck className="h-8 w-8 text-sky-300" />
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" className="h-8 w-8 text-primary">
+              <path fill="currentColor" d="M216 80v104a16 16 0 0 1-16 16H56a16 16 0 0 1-16-16V80a16 16 0 0 1 16-16h144a16 16 0 0 1 16 16Zm-88-48a32 32 0 1 0-32 32a32 32 0 0 0 32-32Z" />
+            </svg>
           <h2 className="text-xl font-headline font-bold text-sidebar-foreground">
-            VeriSend
+            Berry Pie
           </h2>
         </div>
       </SidebarHeader>
@@ -95,7 +96,7 @@ export function SidebarNav() {
               Sales Rep
             </span>
             <span className="text-muted-foreground">
-              sales.rep@verisend.com
+              sales.rep@berrypie.com
             </span>
           </div>
         </div>

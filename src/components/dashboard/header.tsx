@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from 'react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,13 +13,23 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import type { DashboardTab } from '@/app/page';
 
-export function Header() {
+interface HeaderProps {
+  activeTab: DashboardTab;
+  onTabChange: (tab: DashboardTab) => void;
+}
+
+export function Header({ activeTab, onTabChange }: HeaderProps) {
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-card/80 backdrop-blur-sm px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
       <SidebarTrigger className="md:hidden" />
       <div className="flex-1">
-        <Tabs defaultValue="headquarters">
+        <Tabs 
+          defaultValue="headquarters" 
+          value={activeTab} 
+          onValueChange={(value) => onTabChange(value as DashboardTab)}
+        >
           <TabsList>
             <TabsTrigger value="headquarters">본부</TabsTrigger>
             <TabsTrigger value="individual">개인</TabsTrigger>

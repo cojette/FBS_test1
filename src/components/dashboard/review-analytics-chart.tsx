@@ -20,31 +20,36 @@ import {
 } from "@/components/ui/chart"
 
 const chartData = [
-  { reviewType: "상품 광고 심의", count: 275, fill: "var(--color-chart-1)" },
-  { reviewType: "급여 지급 심의", count: 200, fill: "var(--color-chart-2)" },
-  { reviewType: "일반 민원 심의", count: 187, fill: "var(--color-chart-3)" },
-  { reviewType: "기타", count: 173, fill: "var(--color-chart-4)" },
+  { reviewType: "상품 정보 정확성", count: 275, fill: "var(--color-chart-1)" },
+  { reviewType: "필수 안내 포함", count: 200, fill: "var(--color-chart-2)" },
+  { reviewType: "불완전 판매 요소", count: 187, fill: "var(--color-chart-3)" },
+  { reviewType: "광고 심의 규정", count: 173, fill: "var(--color-chart-4)" },
+  { reviewType: "기타", count: 50, fill: "var(--color-chart-5)" },
 ]
 
 const chartConfig = {
   count: {
     label: "횟수",
   },
-  "상품 광고 심의": {
-    label: "상품 광고 심의",
+  "상품 정보 정확성": {
+    label: "상품 정보 정확성",
     color: "hsl(var(--chart-1))",
   },
-  "급여 지급 심의": {
-    label: "급여 지급 심의",
+  "필수 안내 포함": {
+    label: "필수 안내 포함",
     color: "hsl(var(--chart-2))",
   },
-  "일반 민원 심의": {
-    label: "일반 민원 심의",
+  "불완전 판매 요소": {
+    label: "불완전 판매 요소",
     color: "hsl(var(--chart-3))",
+  },
+  "광고 심의 규정": {
+    label: "광고 심의 규정",
+    color: "hsl(var(--chart-4))",
   },
   "기타": {
     label: "기타",
-    color: "hsl(var(--chart-4))",
+    color: "hsl(var(--chart-5))",
   },
 }
 
