@@ -1,6 +1,6 @@
 "use client"
 
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Cell } from "recharts"
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Cell, Legend } from "recharts"
 
 import {
   Card,
@@ -13,6 +13,8 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
+  ChartLegend,
+  ChartLegendContent,
 } from "@/components/ui/chart"
 
 const chartData = [
@@ -57,26 +59,17 @@ export function SnsDistributionChart() {
             <BarChart
               accessibilityLayer
               data={chartData}
-              layout="horizontal"
-              margin={{ top: 10, right: 10, left: 10, bottom: 40 }}
+              layout="vertical"
+              margin={{ top: 10, right: 10, left: 10, bottom: 10 }}
             >
-              <CartesianGrid vertical={false} />
-              <YAxis dataKey="shares" hide/>
-              <XAxis
-                dataKey="platform"
-                tickLine={false}
-                axisLine={false}
-                tickMargin={8}
-                angle={-45}
-                textAnchor="end"
-                interval={0}
-                height={60}
-              />
+              <CartesianGrid horizontal={false} />
+              <YAxis dataKey="platform" type="category" width={80} tickLine={false} axisLine={false} />
+              <XAxis dataKey="shares" type="number" hide />
               <ChartTooltip
                 cursor={false}
                 content={<ChartTooltipContent indicator="dot" />}
               />
-              <Bar dataKey="shares" radius={5}>
+              <Bar dataKey="shares" radius={5} layout="vertical">
                  {chartData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.fill} />
                 ))}

@@ -1,7 +1,7 @@
 "use client"
 
 import { TrendingUp } from "lucide-react"
-import { Pie, PieChart, ResponsiveContainer, Cell } from "recharts"
+import { Pie, PieChart, ResponsiveContainer, Cell, Legend } from "recharts"
 
 import {
   Card,
@@ -15,6 +15,8 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
+  ChartLegend,
+  ChartLegendContent,
 } from "@/components/ui/chart"
 
 const chartData = [
@@ -79,6 +81,7 @@ export function ReviewAnalyticsChart() {
                   <Cell key={`cell-${index}`} fill={entry.fill} />
                 ))}
             </Pie>
+            <ChartLegend content={<ChartLegendContent nameKey="reviewType" />} />
           </PieChart>
         </ChartContainer>
       </CardContent>
