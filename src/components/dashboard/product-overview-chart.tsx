@@ -1,6 +1,6 @@
 "use client"
 
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer } from "recharts"
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Cell } from "recharts"
 
 import {
   Card,
@@ -71,7 +71,11 @@ export function ProductOverviewChart() {
                 cursor={false}
                 content={<ChartTooltipContent indicator="dot" />}
               />
-              <Bar dataKey="count" radius={8} />
+              <Bar dataKey="count" radius={8}>
+                {chartData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.fill} />
+                ))}
+              </Bar>
             </BarChart>
         </ChartContainer>
       </CardContent>

@@ -1,6 +1,6 @@
 "use client"
 
-import { Bar, BarChart, CartesianGrid, XAxis, ResponsiveContainer } from "recharts"
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Cell } from "recharts"
 
 import {
   Card,
@@ -20,7 +20,8 @@ const chartData = [
   { platform: "인스타그램", shares: 850, fill: "var(--color-chart-2)" },
   { platform: "페이스북", shares: 450, fill: "var(--color-chart-3)" },
   { platform: "문자 메시지", shares: 980, fill: "var(--color-chart-4)" },
-]
+];
+
 
 const chartConfig = {
   shares: {
@@ -48,24 +49,38 @@ export function SnsDistributionChart() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="font-headline">SNS 전달 수</CardTitle>
-        <CardDescription>Shares per social media platform</CardDescription>
+        <CardTitle className="font-headline">메신저 전달 수</CardTitle>
+        <CardDescription>Shares per messenger platform</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="min-h-[250px] w-full">
             <BarChart
               accessibilityLayer
               data={chartData}
-              layout="vertical"
-              margin={{ left: 10 }}
+              layout="horizontal"
+              margin={{ top: 10, right: 10, left: 10, bottom: 40 }}
             >
-              <CartesianGrid horizontal={false} />
-              <XAxis type="number" dataKey="shares" hide />
+              <CartesianGrid vertical={false} />
+              <YAxis dataKey="shares" hide/>
+              <XAxis
+                dataKey="platform"
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+                angle={-45}
+                textAnchor="end"
+                interval={0}
+                height={60}
+              />
               <ChartTooltip
                 cursor={false}
                 content={<ChartTooltipContent indicator="dot" />}
               />
-              <Bar dataKey="shares" layout="vertical" radius={5} />
+              <Bar dataKey="shares" radius={5}>
+                 {chartData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.fill} />
+                ))}
+              </Bar>
             </BarChart>
         </ChartContainer>
       </CardContent>

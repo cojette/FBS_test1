@@ -11,18 +11,19 @@ import {
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export function Header() {
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-card/80 backdrop-blur-sm px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
       <SidebarTrigger className="md:hidden" />
       <div className="flex-1">
-        <h1 className="font-headline text-2xl font-bold tracking-tight text-primary">
-          Dashboard
-        </h1>
-        <p className="text-muted-foreground">
-          Welcome back, Sales Representative!
-        </p>
+        <Tabs defaultValue="headquarters">
+          <TabsList>
+            <TabsTrigger value="headquarters">본부</TabsTrigger>
+            <TabsTrigger value="individual">개인</TabsTrigger>
+          </TabsList>
+        </Tabs>
       </div>
       <div className="flex items-center gap-4">
         <DropdownMenu>
