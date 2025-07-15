@@ -16,6 +16,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import type { DateRange } from "react-day-picker";
 import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 
 const videoRanking = [
@@ -36,15 +37,18 @@ const snsRanking = [
 
 interface PerformanceRankingsProps {
   dateRange?: DateRange;
+  selectedSeller?: string;
 }
 
-export function PerformanceRankings({ dateRange }: PerformanceRankingsProps) {
+export function PerformanceRankings({ dateRange, selectedSeller }: PerformanceRankingsProps) {
   const getDateRangeText = () => {
     if (!dateRange?.from) return null;
     const from = format(dateRange.from, "LLL dd, y");
     const to = dateRange.to ? format(dateRange.to, "LLL dd, y") : null;
     return to ? `${from} - ${to}` : from;
   }
+
+  const isSelected = (name: string) => name === selectedSeller;
 
   return (
     <div className="space-y-8">
@@ -67,12 +71,12 @@ export function PerformanceRankings({ dateRange }: PerformanceRankingsProps) {
             </TableHeader>
             <TableBody>
               {videoRanking.map((item) => (
-                <TableRow key={item.rank}>
+                <TableRow key={item.rank} className={cn(isSelected(item.name) && "bg-accent")}>
                   <TableCell>
-                    <Badge variant="secondary">{item.rank}</Badge>
+                    <Badge variant={isSelected(item.name) ? "default" : "secondary"}>{item.rank}</Badge>
                   </TableCell>
-                  <TableCell className="font-medium">{item.name}</TableCell>
-                  <TableCell className="text-right">{item.videos}</TableCell>
+                  <TableCell className={cn("font-medium", isSelected(item.name) ? "text-accent-foreground" : "")}>{item.name}</TableCell>
+                  <TableCell className={cn("text-right", isSelected(item.name) ? "text-accent-foreground" : "")}>{item.videos}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -98,12 +102,12 @@ export function PerformanceRankings({ dateRange }: PerformanceRankingsProps) {
             </TableHeader>
             <TableBody>
               {snsRanking.map((item) => (
-                <TableRow key={item.rank}>
+                <TableRow key={item.rank} className={cn(isSelected(item.name) && "bg-accent")}>
                   <TableCell>
-                    <Badge variant="secondary">{item.rank}</Badge>
+                    <Badge variant={isSelected(item.name) ? "default" : "secondary"}>{item.rank}</Badge>
                   </TableCell>
-                  <TableCell className="font-medium">{item.name}</TableCell>
-                  <TableCell className="text-right">{item.shares.toLocaleString()}</TableCell>
+                  <TableCell className={cn("font-medium", isSelected(item.name) ? "text-accent-foreground" : "")}>{item.name}</TableCell>
+                  <TableCell className={cn("text-right", isSelected(item.name) ? "text-accent-foreground" : "")}>{item.shares.toLocaleString()}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

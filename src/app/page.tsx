@@ -9,7 +9,7 @@ import { ProductOverviewChart } from '@/components/dashboard/product-overview-ch
 import { ReviewAnalyticsChart } from '@/components/dashboard/review-analytics-chart';
 import { SnsDistributionChart } from '@/components/dashboard/sns-distribution-chart';
 import { PerformanceRankings } from '@/components/dashboard/performance-rankings';
-import { Archive, Film, Users, ShieldCheck, UserCheck, Video, FileCheck, ThumbsUp } from 'lucide-react';
+import { Archive, Film, Users, ShieldCheck, UserCheck, Video, FileCheck } from 'lucide-react';
 import { SellerPerformanceChart } from '@/components/dashboard/seller-performance-chart';
 import { ProductPerformanceChart } from '@/components/dashboard/product-performance-chart';
 import { SellerSnsChart } from '@/components/dashboard/seller-sns-chart';
@@ -25,6 +25,7 @@ export default function Home() {
     from: subDays(new Date(), 29),
     to: new Date(),
   });
+  const [selectedSeller, setSelectedSeller] = React.useState<string>("Minjun Kim");
 
   return (
     <SidebarProvider>
@@ -33,7 +34,12 @@ export default function Home() {
       </Sidebar>
       <SidebarInset>
         <div className="flex min-h-screen w-full flex-col">
-          <Header activeTab={activeTab} onTabChange={setActiveTab}>
+          <Header 
+            activeTab={activeTab} 
+            onTabChange={setActiveTab}
+            selectedSeller={selectedSeller}
+            onSellerChange={setSelectedSeller}
+          >
              <DateRangePicker date={date} onDateChange={setDate} />
           </Header>
           <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8 bg-background">
@@ -75,11 +81,10 @@ export default function Home() {
                       <SellerPerformanceChart dateRange={date}/>
                       <ProductPerformanceChart dateRange={date}/>
                     </div>
-                    <ReviewAnalyticsChart dateRange={date}/>
                     <SellerSnsChart dateRange={date}/>
                   </div>
                   <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
-                     <PerformanceRankings dateRange={date}/>
+                     <PerformanceRankings dateRange={date} selectedSeller={selectedSeller}/>
                   </div>
                 </div>
               </>
@@ -117,12 +122,14 @@ export default function Home() {
                 </div>
                 <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
                   <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
-                    <ProductOverviewChart dateRange={date}/>
+                    <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+                      <ProductOverviewChart dateRange={date}/>
+                      <SnsDistributionChart dateRange={date}/>
+                    </div>
                     <ReviewAnalyticsChart dateRange={date}/>
-                    <SnsDistributionChart dateRange={date}/>
                   </div>
                   <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
-                    <PerformanceRankings dateRange={date}/>
+                    <PerformanceRankings dateRange={date} selectedSeller={selectedSeller}/>
                   </div>
                 </div>
               </>

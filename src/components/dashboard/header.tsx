@@ -9,23 +9,46 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { DashboardTab } from '@/app/page';
 
+const sellers = [
+  "Minjun Kim",
+  "Seoyeon Lee",
+  "Doyun Park",
+  "Jiwu Choi",
+  "Haeun Jeong",
+];
+
 interface HeaderProps {
   activeTab: DashboardTab;
   onTabChange: (tab: DashboardTab) => void;
+  selectedSeller: string;
+  onSellerChange: (seller: string) => void;
   children?: React.ReactNode;
 }
 
-export function Header({ activeTab, onTabChange, children }: HeaderProps) {
+export function Header({ 
+  activeTab, 
+  onTabChange, 
+  selectedSeller,
+  onSellerChange,
+  children 
+}: HeaderProps) {
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-card/80 backdrop-blur-sm px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
       <SidebarTrigger className="md:hidden" />
-      <div className="flex-1">
+      <div className="flex items-center gap-4">
         <Tabs 
           defaultValue="headquarters" 
           value={activeTab} 
@@ -36,8 +59,20 @@ export function Header({ activeTab, onTabChange, children }: HeaderProps) {
             <TabsTrigger value="individual">Individual</TabsTrigger>
           </TabsList>
         </Tabs>
+        {activeTab === 'individual' && (
+           <Select value={selectedSeller} onValueChange={onSellerChange}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Select Seller" />
+            </SelectTrigger>
+            <SelectContent>
+              {sellers.map(seller => (
+                <SelectItem key={seller} value={seller}>{seller}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        )}
       </div>
-      <div className="flex items-center gap-4">
+      <div className="flex flex-1 items-center justify-end gap-4">
         {children}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
