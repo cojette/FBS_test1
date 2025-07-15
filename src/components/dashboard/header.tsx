@@ -31,8 +31,8 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
           onValueChange={(value) => onTabChange(value as DashboardTab)}
         >
           <TabsList>
-            <TabsTrigger value="headquarters">본부</TabsTrigger>
-            <TabsTrigger value="individual">개인</TabsTrigger>
+            <TabsTrigger value="headquarters">Headquarters</TabsTrigger>
+            <TabsTrigger value="individual">Individual</TabsTrigger>
           </TabsList>
         </Tabs>
       </div>

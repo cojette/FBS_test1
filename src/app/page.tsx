@@ -9,7 +9,11 @@ import { ProductOverviewChart } from '@/components/dashboard/product-overview-ch
 import { ReviewAnalyticsChart } from '@/components/dashboard/review-analytics-chart';
 import { SnsDistributionChart } from '@/components/dashboard/sns-distribution-chart';
 import { PerformanceRankings } from '@/components/dashboard/performance-rankings';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Archive, Film, Users, ShieldCheck, UserCheck, Video, HeartHandshake, FileCheck, ThumbsUp } from 'lucide-react';
+import { SellerPerformanceChart } from '@/components/dashboard/seller-performance-chart';
+import { ProductPerformanceChart } from '@/components/dashboard/product-performance-chart';
+import { SellerSnsChart } from '@/components/dashboard/seller-sns-chart';
 
 export type DashboardTab = 'headquarters' | 'individual';
 
@@ -29,40 +33,41 @@ export default function Home() {
               <>
                 <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
                   <StatsCard
-                    title="총 등록 상품"
+                    title="Total Registered Products"
                     value="58"
                     icon={Archive}
-                    description="전체 상품 갯수"
+                    description="All Products"
                   />
                   <StatsCard
-                    title="총 등록 영상"
+                    title="Total Registered Videos"
                     value="2,120"
                     icon={Film}
-                    description="전체 영상 갯수"
+                    description="All Videos"
                   />
                   <StatsCard
-                    title="총 전달 고객"
+                    title="Total Customers Reached"
                     value="15,830"
                     icon={Users}
                     description="+15.1% from last month"
                   />
                    <StatsCard
-                    title="전체 검토 완료"
+                    title="Overall Review Completion"
                     value="99.1%"
                     icon={ShieldCheck}
-                    description="전체 영상 대비"
+                    description="Compared to total videos"
                   />
                 </div>
                 <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
                   <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
-                    <ProductOverviewChart />
                     <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
-                      <SnsDistributionChart />
-                      <ReviewAnalyticsChart />
+                      <SellerPerformanceChart />
+                      <ProductPerformanceChart />
                     </div>
+                    <ReviewAnalyticsChart />
+                    <SellerSnsChart />
                   </div>
                   <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
-                    <PerformanceRankings />
+                     <PerformanceRankings />
                   </div>
                 </div>
               </>
@@ -70,44 +75,45 @@ export default function Home() {
               <>
                  <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
                   <StatsCard
-                    title="내 등록 영상"
+                    title="My Registered Videos"
                     value="48"
                     icon={Video}
-                    description="이번달 등록 영상"
+                    description="This month's registered videos"
                   />
                   <StatsCard
-                    title="내 고객"
+                    title="My Customers"
                     value="215"
                     icon={UserCheck}
                     description="+25% from last month"
                   />
                    <StatsCard
-                    title="고객 계약 전환"
+                    title="Customer Contract Conversion"
                     value="32"
                     icon={HeartHandshake}
-                    description="이번달 고객 계약"
+                    description="This month's customer contracts"
                   />
                   <StatsCard
-                    title="내 검토 완료"
+                    title="My Review Completion"
                     value="100%"
                     icon={FileCheck}
-                    description="48건 중 48건 완료"
+                    description="48 of 48 completed"
                   />
                 </div>
                 <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
                   <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
                     <ProductOverviewChart />
+                    <ReviewAnalyticsChart />
                     <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
                       <SnsDistributionChart />
                        <Card>
                           <CardHeader>
-                            <CardTitle className="font-headline">고객 만족도</CardTitle>
-                             <CardDescription>영상 전달 고객 만족도 현황</CardDescription>
+                            <CardTitle className="font-headline">Customer Satisfaction</CardTitle>
+                             <CardDescription>Video delivery customer satisfaction status</CardDescription>
                           </CardHeader>
                           <CardContent className="flex flex-col items-center justify-center pt-6">
                             <ThumbsUp className="w-20 h-20 text-primary mb-4" />
                             <div className="text-5xl font-bold">95%</div>
-                             <p className="text-sm text-muted-foreground mt-2">긍정적 피드백</p>
+                             <p className="text-sm text-muted-foreground mt-2">Positive Feedback</p>
                           </CardContent>
                         </Card>
                     </div>
@@ -124,12 +130,3 @@ export default function Home() {
     </SidebarProvider>
   );
 }
-
-// Add Card, CardHeader, CardTitle, CardDescription, CardContent for completeness from individual dashboard
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";

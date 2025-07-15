@@ -16,31 +16,31 @@ import {
 } from "@/components/ui/chart"
 
 const chartData = [
-  { platform: "카카오톡", shares: 1250, fill: "var(--color-chart-1)" },
-  { platform: "인스타그램", shares: 850, fill: "var(--color-chart-2)" },
-  { platform: "페이스북", shares: 450, fill: "var(--color-chart-3)" },
-  { platform: "문자 메시지", shares: 980, fill: "var(--color-chart-4)" },
+  { platform: "WhatsApp", shares: 1250, fill: "var(--color-chart-1)" },
+  { platform: "Instagram", shares: 850, fill: "var(--color-chart-2)" },
+  { platform: "Facebook", shares: 450, fill: "var(--color-chart-3)" },
+  { platform: "Text Message", shares: 980, fill: "var(--color-chart-4)" },
 ];
 
 
 const chartConfig = {
   shares: {
-    label: "전달 수",
+    label: "Shares",
   },
-  "카카오톡": {
-    label: "카카오톡",
+  "WhatsApp": {
+    label: "WhatsApp",
     color: "hsl(var(--chart-1))",
   },
-  "인스타그램": {
-    label: "인스타그램",
+  "Instagram": {
+    label: "Instagram",
     color: "hsl(var(--chart-2))",
   },
-  "페이스북": {
-    label: "페이스북",
+  "Facebook": {
+    label: "Facebook",
     color: "hsl(var(--chart-3))",
   },
-  "문자 메시지": {
-    label: "문자 메시지",
+  "Text Message": {
+    label: "Text Message",
     color: "hsl(var(--chart-4))",
   },
 }
@@ -49,7 +49,7 @@ export function SnsDistributionChart() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="font-headline">메신저 전달 수</CardTitle>
+        <CardTitle className="font-headline">SNS Distribution</CardTitle>
         <CardDescription>Shares per messenger platform</CardDescription>
       </CardHeader>
       <CardContent>

@@ -16,35 +16,35 @@ import {
 } from "@/components/ui/chart"
 
 const chartData = [
-  { type: "상해 보험", count: 12, fill: "var(--color-chart-1)" },
-  { type: "자동차 보험", count: 21, fill: "var(--color-chart-2)" },
-  { type: "운전자 보험", count: 8, fill: "var(--color-chart-3)" },
-  { type: "건강 보험", count: 15, fill: "var(--color-chart-4)" },
-  { type: "종신 보험", count: 5, fill: "var(--color-chart-5)" },
+  { type: "Funds", count: 12, fill: "var(--color-chart-1)" },
+  { type: "Bonds", count: 21, fill: "var(--color-chart-2)" },
+  { type: "Stocks", count: 8, fill: "var(--color-chart-3)" },
+  { type: "Insurance", count: 15, fill: "var(--color-chart-4)" },
+  { type: "Annuities", count: 5, fill: "var(--color-chart-5)" },
 ]
 
 const chartConfig = {
   count: {
-    label: "상품 수",
+    label: "Products",
   },
-  "상해 보험": {
-    label: "상해 보험",
+  "Funds": {
+    label: "Funds",
     color: "hsl(var(--chart-1))",
   },
-  "자동차 보험": {
-    label: "자동차 보험",
+  "Bonds": {
+    label: "Bonds",
     color: "hsl(var(--chart-2))",
   },
-  "운전자 보험": {
-    label: "운전자 보험",
+  "Stocks": {
+    label: "Stocks",
     color: "hsl(var(--chart-3))",
   },
-  "건강 보험": {
-    label: "건강 보험",
+  "Insurance": {
+    label: "Insurance",
     color: "hsl(var(--chart-4))",
   },
-  "종신 보험": {
-    label: "종신 보험",
+  "Annuities": {
+    label: "Annuities",
     color: "hsl(var(--chart-5))",
   },
 }
@@ -53,8 +53,8 @@ export function ProductOverviewChart() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="font-headline">등록 상품 현황</CardTitle>
-        <CardDescription>Number of registered products by insurance type</CardDescription>
+        <CardTitle className="font-headline">Product Overview</CardTitle>
+        <CardDescription>Number of registered products by type</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="min-h-[250px] w-full">

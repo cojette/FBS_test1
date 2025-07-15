@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
   title: 'Berry Pie Dashboard',
-  description: 'Video validation and distribution dashboard for insurance products.',
+  description: 'Video validation and distribution dashboard for financial products.',
 };
 
 export default function RootLayout({

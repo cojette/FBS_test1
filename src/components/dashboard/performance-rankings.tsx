@@ -16,19 +16,19 @@ import {
 import { Badge } from "@/components/ui/badge";
 
 const videoRanking = [
-  { rank: 1, name: "김민준", videos: 48, change: 2 },
-  { rank: 2, name: "이서연", videos: 42, change: -1 },
-  { rank: 3, name: "박도윤", videos: 35, change: 0 },
-  { rank: 4, name: "최지우", videos: 31, change: 3 },
-  { rank: 5, name: "정하은", videos: 28, change: -1 },
+  { rank: 1, name: "Minjun Kim", videos: 48, change: 2 },
+  { rank: 2, name: "Seoyeon Lee", videos: 42, change: -1 },
+  { rank: 3, name: "Doyun Park", videos: 35, change: 0 },
+  { rank: 4, name: "Jiwu Choi", videos: 31, change: 3 },
+  { rank: 5, name: "Haeun Jeong", videos: 28, change: -1 },
 ];
 
 const snsRanking = [
-  { rank: 1, name: "이서연", shares: 1250, change: 0 },
-  { rank: 2, name: "김민준", shares: 1100, change: 1 },
-  { rank: 3, name: "박도윤", shares: 980, change: 1 },
-  { rank: 4, name: "정하은", shares: 920, change: -2 },
-  { rank: 5, name: "최지우", shares: 850, change: 0 },
+  { rank: 1, name: "Seoyeon Lee", shares: 1250, change: 0 },
+  { rank: 2, name: "Minjun Kim", shares: 1100, change: 1 },
+  { rank: 3, name: "Doyun Park", shares: 980, change: 1 },
+  { rank: 4, name: "Haeun Jeong", shares: 920, change: -2 },
+  { rank: 5, name: "Jiwu Choi", shares: 850, change: 0 },
 ];
 
 export function PerformanceRankings() {
@@ -36,7 +36,7 @@ export function PerformanceRankings() {
     <div className="space-y-8">
       <Card>
         <CardHeader>
-          <CardTitle className="font-headline">사내 영상화 순위</CardTitle>
+          <CardTitle className="font-headline">Internal Video Production Ranking</CardTitle>
           <CardDescription>
             Top 5 sales representatives by video production.
           </CardDescription>
@@ -45,9 +45,9 @@ export function PerformanceRankings() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>순위</TableHead>
-                <TableHead>이름</TableHead>
-                <TableHead className="text-right">영상 수</TableHead>
+                <TableHead>Rank</TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead className="text-right">Videos</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -66,7 +66,7 @@ export function PerformanceRankings() {
       </Card>
       <Card>
         <CardHeader>
-          <CardTitle className="font-headline">SNS 전달 순위</CardTitle>
+          <CardTitle className="font-headline">SNS Distribution Ranking</CardTitle>
           <CardDescription>
             Top 5 sales representatives by SNS shares.
           </CardDescription>
@@ -75,9 +75,9 @@ export function PerformanceRankings() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>순위</TableHead>
-                <TableHead>이름</TableHead>
-                <TableHead className="text-right">전달 수</TableHead>
+                <TableHead>Rank</TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead className="text-right">Shares</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

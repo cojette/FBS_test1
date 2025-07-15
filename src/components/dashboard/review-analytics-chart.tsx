@@ -20,54 +20,54 @@ import {
 } from "@/components/ui/chart"
 
 const chartData = [
-  { reviewType: "상품 정보 정확성", count: 275, fill: "var(--color-chart-1)" },
-  { reviewType: "필수 안내 포함", count: 200, fill: "var(--color-chart-2)" },
-  { reviewType: "불완전 판매 요소", count: 187, fill: "var(--color-chart-3)" },
-  { reviewType: "광고 심의 규정", count: 173, fill: "var(--color-chart-4)" },
-  { reviewType: "기타", count: 50, fill: "var(--color-chart-5)" },
+  { reviewType: "CFPB - UDAAP", videos: 45, fill: "var(--color-chart-1)" },
+  { reviewType: "FTC - Truth-in-Advertising", videos: 82, fill: "var(--color-chart-2)" },
+  { reviewType: "SEC - Anti-Fraud", videos: 65, fill: "var(--color-chart-3)" },
+  { reviewType: "FINRA - Rule 2210", videos: 53, fill: "var(--color-chart-4)" },
+  { reviewType: "OCC - Fair Lending", videos: 30, fill: "var(--color-chart-5)" },
 ]
 
 const chartConfig = {
-  count: {
-    label: "횟수",
+  videos: {
+    label: "Videos",
   },
-  "상품 정보 정확성": {
-    label: "상품 정보 정확성",
+  "CFPB - UDAAP": {
+    label: "CFPB - UDAAP",
     color: "hsl(var(--chart-1))",
   },
-  "필수 안내 포함": {
-    label: "필수 안내 포함",
+  "FTC - Truth-in-Advertising": {
+    label: "FTC - Truth-in-Advertising",
     color: "hsl(var(--chart-2))",
   },
-  "불완전 판매 요소": {
-    label: "불완전 판매 요소",
+  "SEC - Anti-Fraud": {
+    label: "SEC - Anti-Fraud",
     color: "hsl(var(--chart-3))",
   },
-  "광고 심의 규정": {
-    label: "광고 심의 규정",
+  "FINRA - Rule 2210": {
+    label: "FINRA - Rule 2210",
     color: "hsl(var(--chart-4))",
   },
-  "기타": {
-    label: "기타",
+  "OCC - Fair Lending": {
+    label: "OCC - Fair Lending",
     color: "hsl(var(--chart-5))",
   },
 }
 
 export function ReviewAnalyticsChart() {
-  const totalReviews = React.useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.count, 0)
+  const totalVideos = React.useMemo(() => {
+    return chartData.reduce((acc, curr) => acc + curr.videos, 0)
   }, [])
 
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
-        <CardTitle className="font-headline">준법 검토 현황</CardTitle>
-        <CardDescription>Compliance review status</CardDescription>
+        <CardTitle className="font-headline">Compliance Review Analytics</CardTitle>
+        <CardDescription>Breakdown by key compliance checks</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square max-h-[250px]"
+          className="mx-auto aspect-square max-h-[300px]"
         >
           <PieChart>
             <ChartTooltip
@@ -76,28 +76,32 @@ export function ReviewAnalyticsChart() {
             />
             <Pie
               data={chartData}
-              dataKey="count"
+              dataKey="videos"
               nameKey="reviewType"
               innerRadius={60}
               strokeWidth={5}
               labelLine={false}
+              label={({ percent, name }) => `${(percent * 100).toFixed(0)}%`}
             >
                {chartData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.fill} />
                 ))}
             </Pie>
-            <ChartLegend content={<ChartLegendContent nameKey="reviewType" />} />
+            <ChartLegend
+              content={<ChartLegendContent nameKey="reviewType" />}
+              className="[&_.recharts-legend-item-text]:text-xs"
+            />
           </PieChart>
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
         <div className="flex w-full items-center justify-center text-center">
           <span className="text-muted-foreground">
-            총 {totalReviews}건의 검토 완료
+            Total {totalVideos} videos reviewed
           </span>
         </div>
         <div className="leading-none text-muted-foreground">
-          Showing total reviews for compliance checks.
+          Showing total videos reviewed for compliance checks.
         </div>
       </CardFooter>
     </Card>

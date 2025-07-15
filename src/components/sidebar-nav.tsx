@@ -36,37 +36,37 @@ export function SidebarNav() {
           <SidebarMenuItem>
             <SidebarMenuButton tooltip="Dashboard" isActive>
               <LayoutGrid />
-              <span>대시보드</span>
+              <span>Dashboard</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton tooltip="Products">
               <Package />
-              <span>상품</span>
+              <span>Products</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton tooltip="Videos">
               <Video />
-              <span>영상</span>
+              <span>Videos</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton tooltip="Reviews">
               <ClipboardCheck />
-              <span>검토</span>
+              <span>Reviews</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton tooltip="Distribution">
               <Share2 />
-              <span>전달</span>
+              <span>Distribution</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton tooltip="Ranking">
               <Trophy />
-              <span>순위</span>
+              <span>Ranking</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -76,13 +76,13 @@ export function SidebarNav() {
           <SidebarMenuItem>
             <SidebarMenuButton tooltip="Settings">
               <Settings />
-              <span>설정</span>
+              <span>Settings</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton>
               <LogOut />
-              <span>로그아웃</span>
+              <span>Logout</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
