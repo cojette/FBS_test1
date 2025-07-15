@@ -14,6 +14,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import type { DateRange } from "react-day-picker";
+import { format } from "date-fns";
+
 
 const videoRanking = [
   { rank: 1, name: "Minjun Kim", videos: 48, change: 2 },
@@ -31,7 +34,18 @@ const snsRanking = [
   { rank: 5, name: "Jiwu Choi", shares: 850, change: 0 },
 ];
 
-export function PerformanceRankings() {
+interface PerformanceRankingsProps {
+  dateRange?: DateRange;
+}
+
+export function PerformanceRankings({ dateRange }: PerformanceRankingsProps) {
+  const getDateRangeText = () => {
+    if (!dateRange?.from) return null;
+    const from = format(dateRange.from, "LLL dd, y");
+    const to = dateRange.to ? format(dateRange.to, "LLL dd, y") : null;
+    return to ? `${from} - ${to}` : from;
+  }
+
   return (
     <div className="space-y-8">
       <Card>
@@ -39,6 +53,7 @@ export function PerformanceRankings() {
           <CardTitle className="font-headline">Internal Video Production Ranking</CardTitle>
           <CardDescription>
             Top 5 sales representatives by video production.
+            {dateRange?.from && <div className="text-xs text-muted-foreground pt-1">{getDateRangeText()}</div>}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -69,6 +84,7 @@ export function PerformanceRankings() {
           <CardTitle className="font-headline">SNS Distribution Ranking</CardTitle>
           <CardDescription>
             Top 5 sales representatives by SNS shares.
+             {dateRange?.from && <div className="text-xs text-muted-foreground pt-1">{getDateRangeText()}</div>}
           </CardDescription>
         </CardHeader>
         <CardContent>

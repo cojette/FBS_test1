@@ -2,6 +2,8 @@
 
 import React from "react";
 import { Pie, PieChart, ResponsiveContainer, Cell, Legend } from "recharts"
+import type { DateRange } from "react-day-picker";
+import { format } from "date-fns";
 
 import {
   Card,
@@ -20,11 +22,11 @@ import {
 } from "@/components/ui/chart"
 
 const chartData = [
-  { reviewType: "CFPB - UDAAP", videos: 45, fill: "var(--color-chart-1)" },
-  { reviewType: "FTC - Truth-in-Advertising", videos: 82, fill: "var(--color-chart-2)" },
-  { reviewType: "SEC - Anti-Fraud", videos: 65, fill: "var(--color-chart-3)" },
-  { reviewType: "FINRA - Rule 2210", videos: 53, fill: "var(--color-chart-4)" },
-  { reviewType: "OCC - Fair Lending", videos: 30, fill: "var(--color-chart-5)" },
+  { reviewType: "CFPB - UDAAP", videos: 45, fill: "hsl(var(--chart-1))" },
+  { reviewType: "FTC - Truth-in-Advertising", videos: 82, fill: "hsl(var(--chart-2))" },
+  { reviewType: "SEC - Anti-Fraud", videos: 65, fill: "hsl(var(--chart-3))" },
+  { reviewType: "FINRA - Rule 2210", videos: 53, fill: "hsl(var(--chart-4))" },
+  { reviewType: "OCC - Fair Lending", videos: 30, fill: "hsl(var(--chart-5))" },
 ]
 
 const chartConfig = {
@@ -53,10 +55,21 @@ const chartConfig = {
   },
 }
 
-export function ReviewAnalyticsChart() {
+interface ReviewAnalyticsChartProps {
+  dateRange?: DateRange;
+}
+
+export function ReviewAnalyticsChart({ dateRange }: ReviewAnalyticsChartProps) {
   const totalVideos = React.useMemo(() => {
     return chartData.reduce((acc, curr) => acc + curr.videos, 0)
   }, [])
+  
+  const getDateRangeText = () => {
+    if (!dateRange?.from) return "for all time.";
+    const from = format(dateRange.from, "LLL dd, y");
+    const to = dateRange.to ? format(dateRange.to, "LLL dd, y") : null;
+    return to ? `from ${from} to ${to}.` : `since ${from}.`;
+  }
 
   return (
     <Card className="flex flex-col">
@@ -83,8 +96,8 @@ export function ReviewAnalyticsChart() {
               labelLine={false}
               label={({ percent, name }) => `${(percent * 100).toFixed(0)}%`}
             >
-               {chartData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.fill} />
+               {chartData.map((entry) => (
+                  <Cell key={`cell-${entry.reviewType}`} fill={entry.fill} />
                 ))}
             </Pie>
             <ChartLegend
@@ -101,7 +114,7 @@ export function ReviewAnalyticsChart() {
           </span>
         </div>
         <div className="leading-none text-muted-foreground">
-          Showing total videos reviewed for compliance checks.
+          Showing total videos reviewed {getDateRangeText()}
         </div>
       </CardFooter>
     </Card>

@@ -18,9 +18,10 @@ import type { DashboardTab } from '@/app/page';
 interface HeaderProps {
   activeTab: DashboardTab;
   onTabChange: (tab: DashboardTab) => void;
+  children?: React.ReactNode;
 }
 
-export function Header({ activeTab, onTabChange }: HeaderProps) {
+export function Header({ activeTab, onTabChange, children }: HeaderProps) {
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-card/80 backdrop-blur-sm px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
       <SidebarTrigger className="md:hidden" />
@@ -37,6 +38,7 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
         </Tabs>
       </div>
       <div className="flex items-center gap-4">
+        {children}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button

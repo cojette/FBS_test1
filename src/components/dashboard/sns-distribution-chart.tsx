@@ -1,6 +1,8 @@
 "use client"
 
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Cell } from "recharts"
+import type { DateRange } from "react-day-picker";
+import { format } from "date-fns";
 
 import {
   Card,
@@ -16,10 +18,10 @@ import {
 } from "@/components/ui/chart"
 
 const chartData = [
-  { platform: "WhatsApp", shares: 1250, fill: "var(--color-chart-1)" },
-  { platform: "Instagram", shares: 850, fill: "var(--color-chart-2)" },
-  { platform: "Facebook", shares: 450, fill: "var(--color-chart-3)" },
-  { platform: "Text Message", shares: 980, fill: "var(--color-chart-4)" },
+  { platform: "WhatsApp", shares: 1250, fill: "hsl(var(--chart-1))" },
+  { platform: "Instagram", shares: 850, fill: "hsl(var(--chart-2))" },
+  { platform: "Facebook", shares: 450, fill: "hsl(var(--chart-3))" },
+  { platform: "Text Message", shares: 980, fill: "hsl(var(--chart-4))" },
 ];
 
 
@@ -45,12 +47,25 @@ const chartConfig = {
   },
 }
 
-export function SnsDistributionChart() {
+interface SnsDistributionChartProps {
+  dateRange?: DateRange;
+}
+
+export function SnsDistributionChart({ dateRange }: SnsDistributionChartProps) {
+  const getDateRangeText = () => {
+    if (!dateRange?.from) return null;
+    const from = format(dateRange.from, "LLL dd, y");
+    const to = dateRange.to ? format(dateRange.to, "LLL dd, y") : null;
+    return to ? `${from} - ${to}` : from;
+  }
   return (
     <Card>
       <CardHeader>
         <CardTitle className="font-headline">SNS Distribution</CardTitle>
-        <CardDescription>Shares per messenger platform</CardDescription>
+        <CardDescription>
+          Shares per messenger platform
+          {dateRange?.from && <div className="text-xs text-muted-foreground pt-1">{getDateRangeText()}</div>}
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="min-h-[250px] w-full">
@@ -68,8 +83,8 @@ export function SnsDistributionChart() {
                 content={<ChartTooltipContent indicator="dot" />}
               />
               <Bar dataKey="shares" radius={5} layout="vertical">
-                 {chartData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.fill} />
+                 {chartData.map((entry) => (
+                  <Cell key={`cell-${entry.platform}`} fill={entry.fill} />
                 ))}
               </Bar>
             </BarChart>

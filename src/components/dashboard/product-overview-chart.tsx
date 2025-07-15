@@ -1,6 +1,8 @@
 "use client"
 
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Cell } from "recharts"
+import type { DateRange } from "react-day-picker";
+import { format } from "date-fns";
 
 import {
   Card,
@@ -49,12 +51,26 @@ const chartConfig = {
   },
 }
 
-export function ProductOverviewChart() {
+interface ProductOverviewChartProps {
+  dateRange?: DateRange;
+}
+
+export function ProductOverviewChart({ dateRange }: ProductOverviewChartProps) {
+   const getDateRangeText = () => {
+    if (!dateRange?.from) return null;
+    const from = format(dateRange.from, "LLL dd, y");
+    const to = dateRange.to ? format(dateRange.to, "LLL dd, y") : null;
+    return to ? `${from} - ${to}` : from;
+  }
+
   return (
     <Card>
       <CardHeader>
         <CardTitle className="font-headline">Product Overview</CardTitle>
-        <CardDescription>Number of registered products by type</CardDescription>
+        <CardDescription>
+          Number of registered products by type
+          {dateRange?.from && <div className="text-xs text-muted-foreground pt-1">{getDateRangeText()}</div>}
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="min-h-[250px] w-full">
@@ -72,8 +88,8 @@ export function ProductOverviewChart() {
                 content={<ChartTooltipContent indicator="dot" />}
               />
               <Bar dataKey="count" radius={8}>
-                {chartData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.fill} />
+                {chartData.map((entry) => (
+                  <Cell key={`cell-${entry.type}`} fill={entry.fill} />
                 ))}
               </Bar>
             </BarChart>

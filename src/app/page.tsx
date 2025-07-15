@@ -14,11 +14,18 @@ import { Archive, Film, Users, ShieldCheck, UserCheck, Video, HeartHandshake, Fi
 import { SellerPerformanceChart } from '@/components/dashboard/seller-performance-chart';
 import { ProductPerformanceChart } from '@/components/dashboard/product-performance-chart';
 import { SellerSnsChart } from '@/components/dashboard/seller-sns-chart';
+import { DateRangePicker } from '@/components/dashboard/date-range-picker';
+import type { DateRange } from 'react-day-picker';
+import { subDays } from 'date-fns';
 
 export type DashboardTab = 'headquarters' | 'individual';
 
 export default function Home() {
   const [activeTab, setActiveTab] = React.useState<DashboardTab>('headquarters');
+  const [date, setDate] = React.useState<DateRange | undefined>({
+    from: subDays(new Date(), 29),
+    to: new Date(),
+  });
 
   return (
     <SidebarProvider>
@@ -27,7 +34,9 @@ export default function Home() {
       </Sidebar>
       <SidebarInset>
         <div className="flex min-h-screen w-full flex-col">
-          <Header activeTab={activeTab} onTabChange={setActiveTab} />
+          <Header activeTab={activeTab} onTabChange={setActiveTab}>
+             <DateRangePicker date={date} onDateChange={setDate} />
+          </Header>
           <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8 bg-background">
             {activeTab === 'headquarters' ? (
               <>
@@ -37,37 +46,41 @@ export default function Home() {
                     value="58"
                     icon={Archive}
                     description="All Products"
+                    dateRange={date}
                   />
                   <StatsCard
                     title="Total Registered Videos"
                     value="2,120"
                     icon={Film}
                     description="All Videos"
+                    dateRange={date}
                   />
                   <StatsCard
                     title="Total Customers Reached"
                     value="15,830"
                     icon={Users}
                     description="+15.1% from last month"
+                    dateRange={date}
                   />
                    <StatsCard
                     title="Overall Review Completion"
                     value="99.1%"
                     icon={ShieldCheck}
                     description="Compared to total videos"
+                    dateRange={date}
                   />
                 </div>
                 <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
                   <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
                     <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
-                      <SellerPerformanceChart />
-                      <ProductPerformanceChart />
+                      <SellerPerformanceChart dateRange={date}/>
+                      <ProductPerformanceChart dateRange={date}/>
                     </div>
-                    <ReviewAnalyticsChart />
-                    <SellerSnsChart />
+                    <ReviewAnalyticsChart dateRange={date}/>
+                    <SellerSnsChart dateRange={date}/>
                   </div>
                   <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
-                     <PerformanceRankings />
+                     <PerformanceRankings dateRange={date}/>
                   </div>
                 </div>
               </>
@@ -79,36 +92,42 @@ export default function Home() {
                     value="48"
                     icon={Video}
                     description="This month's registered videos"
+                    dateRange={date}
                   />
                   <StatsCard
                     title="My Customers"
                     value="215"
                     icon={UserCheck}
                     description="+25% from last month"
+                    dateRange={date}
                   />
                    <StatsCard
                     title="Customer Contract Conversion"
                     value="32"
                     icon={HeartHandshake}
                     description="This month's customer contracts"
+                    dateRange={date}
                   />
                   <StatsCard
                     title="My Review Completion"
                     value="100%"
                     icon={FileCheck}
                     description="48 of 48 completed"
+                    dateRange={date}
                   />
                 </div>
                 <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
                   <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
-                    <ProductOverviewChart />
-                    <ReviewAnalyticsChart />
+                    <ProductOverviewChart dateRange={date}/>
+                    <ReviewAnalyticsChart dateRange={date}/>
                     <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
-                      <SnsDistributionChart />
+                      <SnsDistributionChart dateRange={date}/>
                        <Card>
-                          <CardHeader>
-                            <CardTitle className="font-headline">Customer Satisfaction</CardTitle>
-                             <CardDescription>Video delivery customer satisfaction status</CardDescription>
+                          <CardHeader className="flex flex-row items-start justify-between">
+                            <div>
+                              <CardTitle className="font-headline">Customer Satisfaction</CardTitle>
+                              <CardDescription>Video delivery customer satisfaction status</CardDescription>
+                            </div>
                           </CardHeader>
                           <CardContent className="flex flex-col items-center justify-center pt-6">
                             <ThumbsUp className="w-20 h-20 text-primary mb-4" />
@@ -119,7 +138,7 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
-                    <PerformanceRankings />
+                    <PerformanceRankings dateRange={date}/>
                   </div>
                 </div>
               </>

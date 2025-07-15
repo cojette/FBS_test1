@@ -1,6 +1,8 @@
 "use client"
 
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Legend, Tooltip, ResponsiveContainer } from "recharts"
+import type { DateRange } from "react-day-picker";
+import { format } from "date-fns";
 
 import {
   Card,
@@ -51,13 +53,26 @@ const data = [
   },
 ];
 
+interface SellerSnsChartProps {
+  dateRange?: DateRange;
+}
 
-export function SellerSnsChart() {
+export function SellerSnsChart({ dateRange }: SellerSnsChartProps) {
+  const getDateRangeText = () => {
+    if (!dateRange?.from) return null;
+    const from = format(dateRange.from, "LLL dd, y");
+    const to = dateRange.to ? format(dateRange.to, "LLL dd, y") : null;
+    return to ? `${from} - ${to}` : from;
+  }
+
   return (
     <Card>
       <CardHeader>
         <CardTitle className="font-headline">SNS Distribution by Seller</CardTitle>
-        <CardDescription>Shares and customers reached per seller</CardDescription>
+        <CardDescription>
+          Shares and customers reached per seller
+          {dateRange?.from && <div className="text-xs text-muted-foreground pt-1">{getDateRangeText()}</div>}
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={{}} className="min-h-[300px] w-full">
@@ -78,10 +93,10 @@ export function SellerSnsChart() {
                 contentStyle={{ backgroundColor: 'hsl(var(--background))', border: '1px solid hsl(var(--border))' }}
               />
               <Legend />
-              <Bar dataKey="WhatsApp" stackId="a" fill="var(--color-chart-1)" name="WhatsApp" />
-              <Bar dataKey="Instagram" stackId="a" fill="var(--color-chart-2)" name="Instagram" />
-              <Bar dataKey="Facebook" stackId="a" fill="var(--color-chart-3)" name="Facebook" />
-              <Bar dataKey="customers" fill="var(--color-chart-5)" name="Customers Reached" />
+              <Bar dataKey="WhatsApp" stackId="a" fill="hsl(var(--chart-1))" name="WhatsApp" />
+              <Bar dataKey="Instagram" stackId="a" fill="hsl(var(--chart-2))" name="Instagram" />
+              <Bar dataKey="Facebook" stackId="a" fill="hsl(var(--chart-3))" name="Facebook" />
+              <Bar dataKey="customers" fill="hsl(var(--chart-5))" name="Customers Reached" />
             </BarChart>
           </ResponsiveContainer>
         </ChartContainer>
