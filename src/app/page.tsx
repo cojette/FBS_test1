@@ -9,8 +9,7 @@ import { ProductOverviewChart } from '@/components/dashboard/product-overview-ch
 import { ReviewAnalyticsChart } from '@/components/dashboard/review-analytics-chart';
 import { SnsDistributionChart } from '@/components/dashboard/sns-distribution-chart';
 import { PerformanceRankings } from '@/components/dashboard/performance-rankings';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Archive, Film, Users, ShieldCheck, UserCheck, Video, HeartHandshake, FileCheck, ThumbsUp } from 'lucide-react';
+import { Archive, Film, Users, ShieldCheck, UserCheck, Video, FileCheck, ThumbsUp } from 'lucide-react';
 import { SellerPerformanceChart } from '@/components/dashboard/seller-performance-chart';
 import { ProductPerformanceChart } from '@/components/dashboard/product-performance-chart';
 import { SellerSnsChart } from '@/components/dashboard/seller-sns-chart';
@@ -95,17 +94,17 @@ export default function Home() {
                     dateRange={date}
                   />
                   <StatsCard
-                    title="My Customers"
+                    title="My Customers Reached"
                     value="215"
                     icon={UserCheck}
                     description="+25% from last month"
                     dateRange={date}
                   />
-                   <StatsCard
-                    title="Customer Contract Conversion"
-                    value="32"
-                    icon={HeartHandshake}
-                    description="This month's customer contracts"
+                  <StatsCard
+                    title="Total Registered Products"
+                    value="12"
+                    icon={Archive}
+                    description="My registered products"
                     dateRange={date}
                   />
                   <StatsCard
@@ -120,22 +119,7 @@ export default function Home() {
                   <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
                     <ProductOverviewChart dateRange={date}/>
                     <ReviewAnalyticsChart dateRange={date}/>
-                    <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
-                      <SnsDistributionChart dateRange={date}/>
-                       <Card>
-                          <CardHeader className="flex flex-row items-start justify-between">
-                            <div>
-                              <CardTitle className="font-headline">Customer Satisfaction</CardTitle>
-                              <CardDescription>Video delivery customer satisfaction status</CardDescription>
-                            </div>
-                          </CardHeader>
-                          <CardContent className="flex flex-col items-center justify-center pt-6">
-                            <ThumbsUp className="w-20 h-20 text-primary mb-4" />
-                            <div className="text-5xl font-bold">95%</div>
-                             <p className="text-sm text-muted-foreground mt-2">Positive Feedback</p>
-                          </CardContent>
-                        </Card>
-                    </div>
+                    <SnsDistributionChart dateRange={date}/>
                   </div>
                   <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
                     <PerformanceRankings dateRange={date}/>
