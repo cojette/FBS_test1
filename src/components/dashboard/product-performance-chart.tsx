@@ -34,7 +34,9 @@ export function ProductPerformanceChart() {
             <CartesianGrid strokeDasharray="3 3" vertical={false}/>
             <XAxis dataKey="name" />
             <YAxis />
-            <Tooltip />
+            <Tooltip
+              contentStyle={{ backgroundColor: 'hsl(var(--background))', border: '1px solid hsl(var(--border))' }}
+            />
             <Legend />
             <Bar dataKey="created" fill="var(--color-chart-2)" name="Created" radius={[4, 4, 0, 0]}/>
             <Bar dataKey="distributed" fill="var(--color-chart-1)" name="Distributed" radius={[4, 4, 0, 0]}/>

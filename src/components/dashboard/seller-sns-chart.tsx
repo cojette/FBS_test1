@@ -74,7 +74,9 @@ export function SellerSnsChart() {
               <CartesianGrid strokeDasharray="3 3" vertical={false} />
               <XAxis dataKey="name" />
               <YAxis />
-              <Tooltip />
+              <Tooltip 
+                contentStyle={{ backgroundColor: 'hsl(var(--background))', border: '1px solid hsl(var(--border))' }}
+              />
               <Legend />
               <Bar dataKey="WhatsApp" stackId="a" fill="var(--color-chart-1)" name="WhatsApp" />
               <Bar dataKey="Instagram" stackId="a" fill="var(--color-chart-2)" name="Instagram" />
