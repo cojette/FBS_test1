@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -19,7 +20,7 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 
 
-const videoRanking = [
+const initialVideoRanking = [
   { rank: 1, name: "Minjun Kim", videos: 48, change: 2 },
   { rank: 2, name: "Seoyeon Lee", videos: 42, change: -1 },
   { rank: 3, name: "Doyun Park", videos: 35, change: 0 },
@@ -27,7 +28,7 @@ const videoRanking = [
   { rank: 5, name: "Haeun Jeong", videos: 28, change: -1 },
 ];
 
-const snsRanking = [
+const initialSnsRanking = [
   { rank: 1, name: "Seoyeon Lee", shares: 1250, change: 0 },
   { rank: 2, name: "Minjun Kim", shares: 1100, change: 1 },
   { rank: 3, name: "Doyun Park", shares: 980, change: 1 },
@@ -41,6 +42,26 @@ interface PerformanceRankingsProps {
 }
 
 export function PerformanceRankings({ dateRange, selectedSeller }: PerformanceRankingsProps) {
+  const [videoRanking, setVideoRanking] = useState(initialVideoRanking);
+  const [snsRanking, setSnsRanking] = useState(initialSnsRanking);
+
+  useEffect(() => {
+    if (dateRange?.from) {
+      const newVideoRanking = [...initialVideoRanking]
+        .map(item => ({ ...item, videos: Math.floor(Math.random() * 50) + 10 }))
+        .sort((a, b) => b.videos - a.videos)
+        .map((item, index) => ({ ...item, rank: index + 1 }));
+      setVideoRanking(newVideoRanking);
+      
+      const newSnsRanking = [...initialSnsRanking]
+        .map(item => ({ ...item, shares: Math.floor(Math.random() * 1300) + 200 }))
+        .sort((a, b) => b.shares - a.shares)
+        .map((item, index) => ({ ...item, rank: index + 1 }));
+      setSnsRanking(newSnsRanking);
+    }
+  }, [dateRange]);
+
+
   const getDateRangeText = () => {
     if (!dateRange?.from) return null;
     const from = format(dateRange.from, "LLL dd, y");

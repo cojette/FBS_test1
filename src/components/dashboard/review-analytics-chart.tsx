@@ -1,7 +1,7 @@
 "use client"
 
-import React from "react";
-import { Pie, PieChart, ResponsiveContainer, Cell, Legend } from "recharts"
+import React, { useEffect, useState } from "react";
+import { Pie, PieChart, ResponsiveContainer, Cell } from "recharts"
 import type { DateRange } from "react-day-picker";
 import { format } from "date-fns";
 
@@ -21,7 +21,7 @@ import {
   ChartLegendContent,
 } from "@/components/ui/chart"
 
-const chartData = [
+const initialData = [
   { reviewType: "CFPB - UDAAP", videos: 45, fill: "hsl(var(--chart-1))" },
   { reviewType: "FTC - Truth-in-Advertising", videos: 82, fill: "hsl(var(--chart-2))" },
   { reviewType: "SEC - Anti-Fraud", videos: 65, fill: "hsl(var(--chart-3))" },
@@ -60,9 +60,20 @@ interface ReviewAnalyticsChartProps {
 }
 
 export function ReviewAnalyticsChart({ dateRange }: ReviewAnalyticsChartProps) {
+  const [chartData, setChartData] = useState(initialData);
+
+  useEffect(() => {
+    if (dateRange?.from) {
+       setChartData(initialData.map(item => ({
+        ...item,
+        videos: Math.floor(Math.random() * 90) + 10,
+      })));
+    }
+  }, [dateRange]);
+
   const totalVideos = React.useMemo(() => {
     return chartData.reduce((acc, curr) => acc + curr.videos, 0)
-  }, [])
+  }, [chartData])
   
   const getDateRangeText = () => {
     if (!dateRange?.from) return "for all time.";

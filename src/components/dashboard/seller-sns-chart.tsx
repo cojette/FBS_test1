@@ -1,5 +1,6 @@
 "use client"
 
+import React, { useEffect, useState } from "react";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Legend, Tooltip, ResponsiveContainer } from "recharts"
 import type { DateRange } from "react-day-picker";
 import { format } from "date-fns";
@@ -15,7 +16,7 @@ import {
   ChartContainer
 } from "@/components/ui/chart"
 
-const data = [
+const initialData = [
   {
     name: 'Minjun K.',
     WhatsApp: 400,
@@ -58,6 +59,20 @@ interface SellerSnsChartProps {
 }
 
 export function SellerSnsChart({ dateRange }: SellerSnsChartProps) {
+  const [data, setData] = useState(initialData);
+
+  useEffect(() => {
+    if (dateRange?.from) {
+      setData(initialData.map(item => ({
+        ...item,
+        WhatsApp: Math.floor(Math.random() * 500),
+        Instagram: Math.floor(Math.random() * 1000),
+        Facebook: Math.floor(Math.random() * 300),
+        customers: Math.floor(Math.random() * 1500),
+      })));
+    }
+  }, [dateRange]);
+
   const getDateRangeText = () => {
     if (!dateRange?.from) return null;
     const from = format(dateRange.from, "LLL dd, y");

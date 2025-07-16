@@ -1,5 +1,6 @@
 "use client"
 
+import React, { useEffect, useState } from "react";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Legend, Tooltip } from "recharts"
 import type { DateRange } from "react-day-picker";
 import { format } from "date-fns";
@@ -15,7 +16,7 @@ import {
   ChartContainer
 } from "@/components/ui/chart"
 
-const chartData = [
+const initialData = [
   { name: 'Minjun K.', created: 48, distributed: 40 },
   { name: 'Seoyeon L.', created: 42, distributed: 38 },
   { name: 'Doyun P.', created: 35, distributed: 28 },
@@ -28,6 +29,22 @@ interface SellerPerformanceChartProps {
 }
 
 export function SellerPerformanceChart({ dateRange }: SellerPerformanceChartProps) {
+  const [chartData, setChartData] = useState(initialData);
+
+  useEffect(() => {
+    if(dateRange?.from) {
+      setChartData(initialData.map(item => {
+        const created = Math.floor(Math.random() * 50) + 10;
+        const distributed = Math.floor(Math.random() * created);
+        return {
+          ...item,
+          created,
+          distributed,
+        };
+      }));
+    }
+  }, [dateRange]);
+
     const getDateRangeText = () => {
     if (!dateRange?.from) return null;
     const from = format(dateRange.from, "LLL dd, y");

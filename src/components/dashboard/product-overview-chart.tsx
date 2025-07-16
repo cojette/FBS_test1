@@ -1,5 +1,6 @@
 "use client"
 
+import React, { useEffect, useState } from "react"
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Cell } from "recharts"
 import type { DateRange } from "react-day-picker";
 import { format } from "date-fns";
@@ -17,12 +18,12 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 
-const chartData = [
-  { type: "Funds", count: 12, fill: "var(--color-chart-1)" },
-  { type: "Bonds", count: 21, fill: "var(--color-chart-2)" },
-  { type: "Stocks", count: 8, fill: "var(--color-chart-3)" },
-  { type: "Insurance", count: 15, fill: "var(--color-chart-4)" },
-  { type: "Annuities", count: 5, fill: "var(--color-chart-5)" },
+const initialData = [
+  { type: "Funds", count: 12, fill: "hsl(var(--chart-1))" },
+  { type: "Bonds", count: 21, fill: "hsl(var(--chart-2))" },
+  { type: "Stocks", count: 8, fill: "hsl(var(--chart-3))" },
+  { type: "Insurance", count: 15, fill: "hsl(var(--chart-4))" },
+  { type: "Annuities", count: 5, fill: "hsl(var(--chart-5))" },
 ]
 
 const chartConfig = {
@@ -56,6 +57,17 @@ interface ProductOverviewChartProps {
 }
 
 export function ProductOverviewChart({ dateRange }: ProductOverviewChartProps) {
+  const [chartData, setChartData] = useState(initialData);
+
+  useEffect(() => {
+    if (dateRange?.from) {
+      setChartData(initialData.map(item => ({
+        ...item,
+        count: Math.floor(Math.random() * 25) + 1
+      })));
+    }
+  }, [dateRange]);
+
    const getDateRangeText = () => {
     if (!dateRange?.from) return null;
     const from = format(dateRange.from, "LLL dd, y");

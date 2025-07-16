@@ -1,5 +1,6 @@
 "use client"
 
+import React, { useEffect, useState } from "react";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Cell } from "recharts"
 import type { DateRange } from "react-day-picker";
 import { format } from "date-fns";
@@ -17,7 +18,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 
-const chartData = [
+const initialData = [
   { platform: "WhatsApp", shares: 1250, fill: "hsl(var(--chart-1))" },
   { platform: "Instagram", shares: 850, fill: "hsl(var(--chart-2))" },
   { platform: "Facebook", shares: 450, fill: "hsl(var(--chart-3))" },
@@ -52,6 +53,17 @@ interface SnsDistributionChartProps {
 }
 
 export function SnsDistributionChart({ dateRange }: SnsDistributionChartProps) {
+    const [chartData, setChartData] = useState(initialData);
+
+    useEffect(() => {
+        if (dateRange?.from) {
+            setChartData(initialData.map(item => ({
+                ...item,
+                shares: Math.floor(Math.random() * 1300) + 200,
+            })));
+        }
+    }, [dateRange]);
+
   const getDateRangeText = () => {
     if (!dateRange?.from) return null;
     const from = format(dateRange.from, "LLL dd, y");

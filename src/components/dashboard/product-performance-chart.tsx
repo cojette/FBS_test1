@@ -1,5 +1,6 @@
 "use client"
 
+import React, { useEffect, useState } from "react";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Legend, Tooltip } from "recharts"
 import type { DateRange } from "react-day-picker";
 import { format } from "date-fns";
@@ -15,7 +16,7 @@ import {
   ChartContainer
 } from "@/components/ui/chart"
 
-const chartData = [
+const initialData = [
   { name: 'Funds', created: 40, distributed: 24 },
   { name: 'Bonds', created: 30, distributed: 13 },
   { name: 'Stocks', created: 20, distributed: 9 },
@@ -29,6 +30,22 @@ interface ProductPerformanceChartProps {
 
 
 export function ProductPerformanceChart({ dateRange }: ProductPerformanceChartProps) {
+  const [chartData, setChartData] = useState(initialData);
+
+  useEffect(() => {
+    if(dateRange?.from) {
+      setChartData(initialData.map(item => {
+        const created = Math.floor(Math.random() * 45) + 5;
+        const distributed = Math.floor(Math.random() * created);
+        return {
+          ...item,
+          created,
+          distributed,
+        };
+      }));
+    }
+  }, [dateRange]);
+
   const getDateRangeText = () => {
     if (!dateRange?.from) return null;
     const from = format(dateRange.from, "LLL dd, y");

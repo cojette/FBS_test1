@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
   Card,
@@ -17,7 +18,26 @@ interface StatsCardProps {
   dateRange?: DateRange;
 }
 
-export function StatsCard({ title, value, icon: Icon, description, dateRange }: StatsCardProps) {
+export function StatsCard({ title, value: initialValue, icon: Icon, description, dateRange }: StatsCardProps) {
+  const [value, setValue] = useState(initialValue);
+
+  useEffect(() => {
+    if (dateRange?.from) {
+      const isPercentage = initialValue.includes('%');
+      let newValue: string;
+      if (isPercentage) {
+        const randomPercentage = (Math.random() * 10 + 90).toFixed(1);
+        newValue = `${randomPercentage}%`;
+      } else {
+        const numericValue = parseInt(initialValue.replace(/,/g, ''), 10);
+        const randomFactor = 0.8 + Math.random() * 0.4; // 80% to 120%
+        newValue = Math.floor(numericValue * randomFactor).toLocaleString();
+      }
+      setValue(newValue);
+    }
+  }, [dateRange, initialValue]);
+
+
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
