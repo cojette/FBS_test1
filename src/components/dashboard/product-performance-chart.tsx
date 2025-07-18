@@ -17,48 +17,49 @@ import {
 } from "@/components/ui/chart"
 
 const initialData = [
-  { name: 'Minjun K.', uploaded: 58, approved: 52 },
-  { name: 'Seoyeon L.', uploaded: 52, approved: 48 },
-  { name: 'Doyun P.', uploaded: 45, approved: 41 },
-  { name: 'Jiwu C.', uploaded: 41, approved: 35 },
-  { name: 'Haeun J.', uploaded: 38, approved: 36 },
+  { name: 'Funds', created: 45, distributed: 35 },
+  { name: 'Bonds', created: 38, distributed: 28 },
+  { name: 'Stocks', created: 30, distributed: 25 },
+  { name: 'Insurance', created: 25, distributed: 20 },
+  { name: 'Loans', created: 20, distributed: 15 },
 ];
 
-interface SellerPerformanceChartProps {
+interface ProductPerformanceChartProps {
   dateRange?: DateRange;
 }
 
-export function SellerPerformanceChart({ dateRange }: SellerPerformanceChartProps) {
+export function ProductPerformanceChart({ dateRange }: ProductPerformanceChartProps) {
   const [chartData, setChartData] = useState(initialData);
 
   useEffect(() => {
     if(dateRange?.from) {
       setChartData(initialData.map(item => {
-        const uploaded = Math.floor(Math.random() * 60) + 10;
-        const approved = Math.floor(uploaded * (0.8 + Math.random() * 0.2));
+        const created = Math.floor(Math.random() * 50) + 10;
+        const distributed = Math.floor(created * (0.6 + Math.random() * 0.35));
         return {
           ...item,
-          uploaded,
-          approved,
+          created,
+          distributed,
         };
       }));
     }
   }, [dateRange]);
 
-    const getDateRangeText = () => {
+  const getDateRangeText = () => {
     if (!dateRange?.from) return "for all time.";
     const from = format(dateRange.from, "LLL dd, y");
     const to = dateRange.to ? format(dateRange.to, "LLL dd, y") : null;
     return to ? `from ${from} to ${to}.` : `since ${from}.`;
   }
+  
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="font-headline">Seller Performance</CardTitle>
+        <CardTitle className="font-headline">Product Performance</CardTitle>
         <CardDescription>
-          Video uploads and compliance approvals by top sellers.
+          Videos created and distributed by product type.
         </CardDescription>
-        <CardDescription className="text-xs text-muted-foreground pt-1">Showing data {getDateRangeText()}</CardDescription>
+         <CardDescription className="text-xs text-muted-foreground pt-1">Showing data {getDateRangeText()}</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={{}} className="min-h-[300px] w-full">
@@ -70,8 +71,8 @@ export function SellerPerformanceChart({ dateRange }: SellerPerformanceChartProp
               contentStyle={{ backgroundColor: 'hsl(var(--background))', border: '1px solid hsl(var(--border))' }}
             />
             <Legend />
-            <Bar dataKey="uploaded" fill="hsl(var(--chart-2))" name="Uploaded" radius={[4, 4, 0, 0]} />
-            <Bar dataKey="approved" fill="hsl(var(--chart-1))" name="Approved" radius={[4, 4, 0, 0]}/>
+            <Bar dataKey="created" fill="hsl(var(--chart-4))" name="Created" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="distributed" fill="hsl(var(--chart-5))" name="Distributed" radius={[4, 4, 0, 0]}/>
           </BarChart>
         </ChartContainer>
       </CardContent>

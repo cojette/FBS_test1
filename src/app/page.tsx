@@ -6,13 +6,15 @@ import { SidebarNav } from '@/components/sidebar-nav';
 import { Header } from '@/components/dashboard/header';
 import { StatsCard } from '@/components/dashboard/stats-card';
 import { PerformanceRankings } from '@/components/dashboard/performance-rankings';
-import { Archive, Film, ShieldCheck, UserCheck, Video, FileCheck, Send, CheckCircle, XCircle, Clock } from 'lucide-react';
+import { Video, ShieldCheck, Clock, CheckCircle, XCircle, Send, Package, BarChart, FileText, Share2, Users, Target } from 'lucide-react';
 import { SellerPerformanceChart } from '@/components/dashboard/seller-performance-chart';
 import { DateRangePicker } from '@/components/dashboard/date-range-picker';
 import type { DateRange } from 'react-day-picker';
 import { subDays } from 'date-fns';
 import { ComplianceStatusChart } from '@/components/dashboard/compliance-status-chart';
 import { VideoSharingChart } from '@/components/dashboard/video-sharing-chart';
+import { ComplianceReviewAnalytics } from '@/components/dashboard/compliance-review-analytics';
+import { ProductPerformanceChart } from '@/components/dashboard/product-performance-chart';
 
 export type DashboardTab = 'headquarters' | 'individual';
 
@@ -42,7 +44,7 @@ export default function Home() {
           <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8 bg-background">
             {activeTab === 'headquarters' ? (
               <>
-                <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
+                <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
                   <StatsCard
                     title="Total Videos Uploaded"
                     value="1,250"
@@ -64,10 +66,19 @@ export default function Home() {
                     description="Pending compliance officer approval"
                     dateRange={date}
                   />
+                   <StatsCard
+                    title="Total Products Registered"
+                    value="85"
+                    icon={Package}
+                    description="All active products"
+                    dateRange={date}
+                  />
                 </div>
                 <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
                   <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
                      <SellerPerformanceChart dateRange={date}/>
+                     <ProductPerformanceChart dateRange={date}/>
+                     <ComplianceReviewAnalytics dateRange={date}/>
                   </div>
                   <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
                      <PerformanceRankings dateRange={date} selectedSeller={selectedSeller}/>
@@ -85,33 +96,34 @@ export default function Home() {
                     dateRange={date}
                   />
                   <StatsCard
-                    title="Compliance: Passed"
-                    value="52"
-                    icon={CheckCircle}
-                    description="Videos approved by compliance"
+                    title="My Compliance Rate"
+                    value="90%"
+                    icon={ShieldCheck}
+                    description="Your approved videos"
                     dateRange={date}
                   />
-                  <StatsCard
-                    title="Compliance: Failed"
-                    value="6"
-                    icon={XCircle}
-                    description="Videos rejected by compliance"
+                   <StatsCard
+                    title="My Registered Products"
+                    value="12"
+                    icon={Package}
+                    description="Products you manage"
                     dateRange={date}
                   />
-                  <StatsCard
-                    title="Videos Shared"
+                   <StatsCard
+                    title="Videos Shared (SNS)"
                     value="35"
                     icon={Send}
-                    description="Videos sent via WhatsApp"
+                    description="Videos sent via SNS"
                     dateRange={date}
                   />
                 </div>
                 <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
                   <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
-                     <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+                    <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
                       <ComplianceStatusChart dateRange={date}/>
                       <VideoSharingChart dateRange={date}/>
                     </div>
+                     <ComplianceReviewAnalytics dateRange={date}/>
                   </div>
                   <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
                     <PerformanceRankings dateRange={date} selectedSeller={selectedSeller}/>

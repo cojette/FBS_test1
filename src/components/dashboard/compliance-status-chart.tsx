@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from "react";
-import { Pie, PieChart, ResponsiveContainer, Cell } from "recharts"
+import { Pie, PieChart, ResponsiveContainer, Cell, Tooltip } from "recharts"
 import type { DateRange } from "react-day-picker";
 import { format } from "date-fns";
 
@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/card"
 import {
   ChartContainer,
-  ChartTooltip,
   ChartTooltipContent,
   ChartLegend,
   ChartLegendContent,
@@ -84,8 +83,7 @@ export function ComplianceStatusChart({ dateRange }: ComplianceStatusChartProps)
           className="mx-auto aspect-square max-h-[300px]"
         >
           <PieChart>
-            <ChartTooltip
-              cursor={false}
+            <Tooltip
               content={<ChartTooltipContent hideLabel />}
             />
             <Pie
@@ -94,8 +92,6 @@ export function ComplianceStatusChart({ dateRange }: ComplianceStatusChartProps)
               nameKey="status"
               innerRadius={50}
               strokeWidth={5}
-              labelLine={false}
-              label={({ percent, name }) => `${(percent * 100).toFixed(0)}%`}
             >
                {chartData.map((entry) => (
                   <Cell key={`cell-${entry.status}`} fill={entry.fill} />

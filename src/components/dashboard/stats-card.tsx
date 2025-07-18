@@ -26,16 +26,28 @@ export function StatsCard({ title, value: initialValue, icon: Icon, description,
       const isPercentage = initialValue.includes('%');
       let newValue: string;
       if (isPercentage) {
-        const randomPercentage = (Math.random() * 10 + 90).toFixed(1);
+        const randomPercentage = (Math.random() * 10 + 88).toFixed(1);
         newValue = `${randomPercentage}%`;
       } else {
         const numericValue = parseInt(initialValue.replace(/,/g, ''), 10);
+        if (isNaN(numericValue)) {
+            setValue(initialValue);
+            return;
+        }
         const randomFactor = 0.8 + Math.random() * 0.4; // 80% to 120%
         newValue = Math.floor(numericValue * randomFactor).toLocaleString();
       }
       setValue(newValue);
     }
   }, [dateRange, initialValue]);
+
+
+  const getDateRangeText = () => {
+    if (!dateRange?.from) return "for all time.";
+    const from = format(dateRange.from, "LLL dd, y");
+    const to = dateRange.to ? format(dateRange.to, "LLL dd, y") : null;
+    return to ? `from ${from} to ${to}` : `since ${from}`;
+  }
 
 
   return (
@@ -49,8 +61,7 @@ export function StatsCard({ title, value: initialValue, icon: Icon, description,
         <p className="text-xs text-muted-foreground">{description}</p>
          {dateRange?.from && (
             <p className="text-xs text-muted-foreground pt-2">
-              {format(dateRange.from, "LLL dd, y")}
-              {dateRange.to ? ` - ${format(dateRange.to, "LLL dd, y")}` : ""}
+              {getDateRangeText()}
             </p>
           )}
       </CardContent>
