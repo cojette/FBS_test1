@@ -17,11 +17,11 @@ import {
 } from "@/components/ui/chart"
 
 const initialData = [
-  { name: 'Minjun K.', created: 48, distributed: 40 },
-  { name: 'Seoyeon L.', created: 42, distributed: 38 },
-  { name: 'Doyun P.', created: 35, distributed: 28 },
-  { name: 'Jiwu C.', created: 31, distributed: 25 },
-  { name: 'Haeun J.', created: 28, distributed: 22 },
+  { name: 'Minjun K.', uploaded: 58, approved: 52 },
+  { name: 'Seoyeon L.', uploaded: 52, approved: 48 },
+  { name: 'Doyun P.', uploaded: 45, approved: 41 },
+  { name: 'Jiwu C.', uploaded: 41, approved: 35 },
+  { name: 'Haeun J.', uploaded: 38, approved: 36 },
 ];
 
 interface SellerPerformanceChartProps {
@@ -34,12 +34,12 @@ export function SellerPerformanceChart({ dateRange }: SellerPerformanceChartProp
   useEffect(() => {
     if(dateRange?.from) {
       setChartData(initialData.map(item => {
-        const created = Math.floor(Math.random() * 50) + 10;
-        const distributed = Math.floor(Math.random() * created);
+        const uploaded = Math.floor(Math.random() * 60) + 10;
+        const approved = Math.floor(uploaded * (0.8 + Math.random() * 0.2));
         return {
           ...item,
-          created,
-          distributed,
+          uploaded,
+          approved,
         };
       }));
     }
@@ -56,7 +56,7 @@ export function SellerPerformanceChart({ dateRange }: SellerPerformanceChartProp
       <CardHeader>
         <CardTitle className="font-headline">Seller Performance</CardTitle>
         <CardDescription>
-          Video creation and distribution by seller
+          Video uploads and compliance approvals by top sellers.
           {dateRange?.from && <div className="text-xs text-muted-foreground pt-1">{getDateRangeText()}</div>}
         </CardDescription>
       </CardHeader>
@@ -70,8 +70,8 @@ export function SellerPerformanceChart({ dateRange }: SellerPerformanceChartProp
               contentStyle={{ backgroundColor: 'hsl(var(--background))', border: '1px solid hsl(var(--border))' }}
             />
             <Legend />
-            <Bar dataKey="created" fill="hsl(var(--chart-4))" name="Created" radius={[4, 4, 0, 0]} />
-            <Bar dataKey="distributed" fill="hsl(var(--chart-5))" name="Distributed" radius={[4, 4, 0, 0]}/>
+            <Bar dataKey="uploaded" fill="hsl(var(--chart-2))" name="Uploaded" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="approved" fill="hsl(var(--chart-1))" name="Approved" radius={[4, 4, 0, 0]}/>
           </BarChart>
         </ChartContainer>
       </CardContent>

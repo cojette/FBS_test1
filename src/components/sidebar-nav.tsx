@@ -27,7 +27,7 @@ export function SidebarNav() {
               <path fill="currentColor" d="M216 80v104a16 16 0 0 1-16 16H56a16 16 0 0 1-16-16V80a16 16 0 0 1 16-16h144a16 16 0 0 1 16 16Zm-88-48a32 32 0 1 0-32 32a32 32 0 0 0 32-32Z" />
             </svg>
           <h2 className="text-xl font-headline font-bold text-sidebar-foreground">
-            Berry Pie
+            Mosher
           </h2>
         </div>
       </SidebarHeader>
@@ -40,33 +40,27 @@ export function SidebarNav() {
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton tooltip="Products">
-              <Package />
-              <span>Products</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
             <SidebarMenuButton tooltip="Videos">
               <Video />
               <span>Videos</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton tooltip="Reviews">
+            <SidebarMenuButton tooltip="Compliance">
               <ClipboardCheck />
-              <span>Reviews</span>
+              <span>Compliance</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton tooltip="Distribution">
+            <SidebarMenuButton tooltip="Sharing">
               <Share2 />
-              <span>Distribution</span>
+              <span>Sharing</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
-          <SidebarMenuItem>
-            <SidebarMenuButton tooltip="Ranking">
+           <SidebarMenuItem>
+            <SidebarMenuButton tooltip="Analytics">
               <Trophy />
-              <span>Ranking</span>
+              <span>Analytics</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -96,7 +90,7 @@ export function SidebarNav() {
               Sales Rep
             </span>
             <span className="text-muted-foreground">
-              sales.rep@berrypie.com
+              sales.rep@mosher.com
             </span>
           </div>
         </div>

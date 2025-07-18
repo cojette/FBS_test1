@@ -5,17 +5,14 @@ import { SidebarProvider, Sidebar, SidebarInset } from '@/components/ui/sidebar'
 import { SidebarNav } from '@/components/sidebar-nav';
 import { Header } from '@/components/dashboard/header';
 import { StatsCard } from '@/components/dashboard/stats-card';
-import { ProductOverviewChart } from '@/components/dashboard/product-overview-chart';
-import { ReviewAnalyticsChart } from '@/components/dashboard/review-analytics-chart';
-import { SnsDistributionChart } from '@/components/dashboard/sns-distribution-chart';
 import { PerformanceRankings } from '@/components/dashboard/performance-rankings';
-import { Archive, Film, ShieldCheck, UserCheck, Video, FileCheck } from 'lucide-react';
+import { Archive, Film, ShieldCheck, UserCheck, Video, FileCheck, Send, CheckCircle, XCircle, Clock } from 'lucide-react';
 import { SellerPerformanceChart } from '@/components/dashboard/seller-performance-chart';
-import { ProductPerformanceChart } from '@/components/dashboard/product-performance-chart';
-import { SellerSnsChart } from '@/components/dashboard/seller-sns-chart';
 import { DateRangePicker } from '@/components/dashboard/date-range-picker';
 import type { DateRange } from 'react-day-picker';
 import { subDays } from 'date-fns';
+import { ComplianceStatusChart } from '@/components/dashboard/compliance-status-chart';
+import { VideoSharingChart } from '@/components/dashboard/video-sharing-chart';
 
 export type DashboardTab = 'headquarters' | 'individual';
 
@@ -47,35 +44,30 @@ export default function Home() {
               <>
                 <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
                   <StatsCard
-                    title="Total Registered Products"
-                    value="58"
-                    icon={Archive}
-                    description="All Products"
+                    title="Total Videos Uploaded"
+                    value="1,250"
+                    icon={Video}
+                    description="All videos from sellers"
                     dateRange={date}
                   />
                   <StatsCard
-                    title="Total Registered Videos"
-                    value="2,120"
-                    icon={Film}
-                    description="All Videos"
+                    title="Overall Compliance Rate"
+                    value="92.8%"
+                    icon={ShieldCheck}
+                    description="Approved videos vs. total"
                     dateRange={date}
                   />
                    <StatsCard
-                    title="Overall Review Completion"
-                    value="99.1%"
-                    icon={ShieldCheck}
-                    description="Compared to total videos"
+                    title="Videos Awaiting Review"
+                    value="42"
+                    icon={Clock}
+                    description="Pending compliance officer approval"
                     dateRange={date}
                   />
                 </div>
                 <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
                   <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
-                    <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
-                      <SellerPerformanceChart dateRange={date}/>
-                      <ProductPerformanceChart dateRange={date}/>
-                    </div>
-                    <ReviewAnalyticsChart dateRange={date}/>
-                    <SellerSnsChart dateRange={date}/>
+                     <SellerPerformanceChart dateRange={date}/>
                   </div>
                   <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
                      <PerformanceRankings dateRange={date} selectedSeller={selectedSeller}/>
@@ -86,41 +78,40 @@ export default function Home() {
               <>
                  <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
                   <StatsCard
-                    title="My Registered Videos"
-                    value="48"
+                    title="My Videos Uploaded"
+                    value="58"
                     icon={Video}
-                    description="This month's registered videos"
+                    description="Total videos you uploaded"
                     dateRange={date}
                   />
                   <StatsCard
-                    title="My Customers Reached"
-                    value="215"
-                    icon={UserCheck}
-                    description="+25% from last month"
+                    title="Compliance: Passed"
+                    value="52"
+                    icon={CheckCircle}
+                    description="Videos approved by compliance"
                     dateRange={date}
                   />
                   <StatsCard
-                    title="Total Registered Products"
-                    value="12"
-                    icon={Archive}
-                    description="My registered products"
+                    title="Compliance: Failed"
+                    value="6"
+                    icon={XCircle}
+                    description="Videos rejected by compliance"
                     dateRange={date}
                   />
                   <StatsCard
-                    title="My Review Completion"
-                    value="100%"
-                    icon={FileCheck}
-                    description="48 of 48 completed"
+                    title="Videos Shared"
+                    value="35"
+                    icon={Send}
+                    description="Videos sent via WhatsApp"
                     dateRange={date}
                   />
                 </div>
                 <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
                   <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
                      <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
-                      <ProductOverviewChart dateRange={date}/>
-                      <SnsDistributionChart dateRange={date}/>
+                      <ComplianceStatusChart dateRange={date}/>
+                      <VideoSharingChart dateRange={date}/>
                     </div>
-                    <ReviewAnalyticsChart dateRange={date}/>
                   </div>
                   <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
                     <PerformanceRankings dateRange={date} selectedSeller={selectedSeller}/>

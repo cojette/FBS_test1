@@ -3,7 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: 'Berry Pie Dashboard',
+  title: 'Mosher Dashboard',
   description: 'Video validation and distribution dashboard for financial products.',
 };
 

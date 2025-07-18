@@ -19,10 +19,9 @@ import {
 } from "@/components/ui/chart"
 
 const initialData = [
-  { platform: "WhatsApp", shares: 1250, fill: "hsl(var(--chart-1))" },
-  { platform: "Instagram", shares: 850, fill: "hsl(var(--chart-2))" },
-  { platform: "Facebook", shares: 450, fill: "hsl(var(--chart-3))" },
-  { platform: "Text Message", shares: 980, fill: "hsl(var(--chart-4))" },
+  { platform: "WhatsApp", shares: 45, fill: "hsl(var(--chart-1))" },
+  { platform: "Email", shares: 22, fill: "hsl(var(--chart-2))" },
+  { platform: "Link Copy", shares: 15, fill: "hsl(var(--chart-3))" },
 ];
 
 
@@ -34,32 +33,28 @@ const chartConfig = {
     label: "WhatsApp",
     color: "hsl(var(--chart-1))",
   },
-  "Instagram": {
-    label: "Instagram",
+  "Email": {
+    label: "Email",
     color: "hsl(var(--chart-2))",
   },
-  "Facebook": {
-    label: "Facebook",
+  "Link Copy": {
+    label: "Link Copy",
     color: "hsl(var(--chart-3))",
-  },
-  "Text Message": {
-    label: "Text Message",
-    color: "hsl(var(--chart-4))",
   },
 }
 
-interface SnsDistributionChartProps {
+interface VideoSharingChartProps {
   dateRange?: DateRange;
 }
 
-export function SnsDistributionChart({ dateRange }: SnsDistributionChartProps) {
+export function VideoSharingChart({ dateRange }: VideoSharingChartProps) {
     const [chartData, setChartData] = useState(initialData);
 
     useEffect(() => {
         if (dateRange?.from) {
             setChartData(initialData.map(item => ({
                 ...item,
-                shares: Math.floor(Math.random() * 1300) + 200,
+                shares: Math.floor(Math.random() * 50) + 5,
             })));
         }
     }, [dateRange]);
@@ -73,9 +68,9 @@ export function SnsDistributionChart({ dateRange }: SnsDistributionChartProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="font-headline">SNS Distribution</CardTitle>
+        <CardTitle className="font-headline">Video Sharing</CardTitle>
         <CardDescription>
-          Shares per messenger platform
+          Videos you've shared by platform
           {dateRange?.from && <div className="text-xs text-muted-foreground pt-1">{getDateRangeText()}</div>}
         </CardDescription>
       </CardHeader>

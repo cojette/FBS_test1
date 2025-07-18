@@ -19,22 +19,27 @@ import type { DateRange } from "react-day-picker";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 
-
-const initialVideoRanking = [
-  { rank: 1, name: "Minjun Kim", videos: 48, change: 2 },
-  { rank: 2, name: "Seoyeon Lee", videos: 42, change: -1 },
-  { rank: 3, name: "Doyun Park", videos: 35, change: 0 },
-  { rank: 4, name: "Jiwu Choi", videos: 31, change: 3 },
-  { rank: 5, name: "Haeun Jeong", videos: 28, change: -1 },
+const sellers = [
+  "Minjun Kim", "Seoyeon Lee", "Doyun Park", "Jiwu Choi", "Haeun Jeong",
+  "Yejun Song", "Somin Han", "Eunwoo Lim", "Jiho Yoon", "Sia Kang",
+  "Liam Smith", "Olivia Johnson", "Noah Williams", "Emma Brown", "Oliver Jones",
+  "Ava Garcia", "Elijah Miller", "Sophia Davis", "James Rodriguez", "Isabella Martinez",
+  "Lucas Hernandez", "Mia Lopez", "Mason Gonzalez", "Amelia Wilson", "Ethan Anderson",
+  "Harper Thomas", "Logan Taylor", "Evelyn Moore", "Aiden Jackson", "Abigail Martin"
 ];
 
-const initialSnsRanking = [
-  { rank: 1, name: "Seoyeon Lee", shares: 1250, change: 0 },
-  { rank: 2, name: "Minjun Kim", shares: 1100, change: 1 },
-  { rank: 3, name: "Doyun Park", shares: 980, change: 1 },
-  { rank: 4, name: "Haeun Jeong", shares: 920, change: -2 },
-  { rank: 5, name: "Jiwu Choi", shares: 850, change: 0 },
-];
+const generateInitialRankings = () => {
+    return sellers.map(name => ({
+        name,
+        uploads: Math.floor(Math.random() * 80) + 10,
+        approvals: Math.floor(Math.random() * 70) + 5,
+    }));
+};
+
+
+const initialUploadRanking = generateInitialRankings().sort((a, b) => b.uploads - a.uploads).map((item, index) => ({...item, rank: index + 1}));
+const initialApprovalRanking = generateInitialRankings().sort((a, b) => b.approvals - a.approvals).map((item, index) => ({...item, rank: index + 1}));
+
 
 interface PerformanceRankingsProps {
   dateRange?: DateRange;
@@ -42,22 +47,20 @@ interface PerformanceRankingsProps {
 }
 
 export function PerformanceRankings({ dateRange, selectedSeller }: PerformanceRankingsProps) {
-  const [videoRanking, setVideoRanking] = useState(initialVideoRanking);
-  const [snsRanking, setSnsRanking] = useState(initialSnsRanking);
+  const [uploadRanking, setUploadRanking] = useState(initialUploadRanking);
+  const [approvalRanking, setApprovalRanking] = useState(initialApprovalRanking);
 
   useEffect(() => {
     if (dateRange?.from) {
-      const newVideoRanking = [...initialVideoRanking]
-        .map(item => ({ ...item, videos: Math.floor(Math.random() * 50) + 10 }))
-        .sort((a, b) => b.videos - a.videos)
+      const newUploads = generateInitialRankings()
+        .sort((a, b) => b.uploads - a.uploads)
         .map((item, index) => ({ ...item, rank: index + 1 }));
-      setVideoRanking(newVideoRanking);
+      setUploadRanking(newUploads);
       
-      const newSnsRanking = [...initialSnsRanking]
-        .map(item => ({ ...item, shares: Math.floor(Math.random() * 1300) + 200 }))
-        .sort((a, b) => b.shares - a.shares)
+      const newApprovals = generateInitialRankings()
+        .sort((a, b) => b.approvals - a.approvals)
         .map((item, index) => ({ ...item, rank: index + 1 }));
-      setSnsRanking(newSnsRanking);
+      setApprovalRanking(newApprovals);
     }
   }, [dateRange]);
 
@@ -75,9 +78,9 @@ export function PerformanceRankings({ dateRange, selectedSeller }: PerformanceRa
     <div className="space-y-8">
       <Card>
         <CardHeader>
-          <CardTitle className="font-headline">Internal Video Production Ranking</CardTitle>
+          <CardTitle className="font-headline">Video Upload Ranking</CardTitle>
           <CardDescription>
-            Top 5 sales representatives by video production.
+            Top 5 sellers by video uploads.
             {dateRange?.from && <div className="text-xs text-muted-foreground pt-1">{getDateRangeText()}</div>}
           </CardDescription>
         </CardHeader>
@@ -87,17 +90,17 @@ export function PerformanceRankings({ dateRange, selectedSeller }: PerformanceRa
               <TableRow>
                 <TableHead>Rank</TableHead>
                 <TableHead>Name</TableHead>
-                <TableHead className="text-right">Videos</TableHead>
+                <TableHead className="text-right">Uploads</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {videoRanking.map((item) => (
-                <TableRow key={item.rank} className={cn(isSelected(item.name) && "bg-accent")}>
+              {uploadRanking.slice(0, 5).map((item) => (
+                <TableRow key={item.name} className={cn(isSelected(item.name) && "bg-accent")}>
                   <TableCell>
                     <Badge variant={isSelected(item.name) ? "default" : "secondary"}>{item.rank}</Badge>
                   </TableCell>
                   <TableCell className={cn("font-medium", isSelected(item.name) ? "text-accent-foreground" : "")}>{item.name}</TableCell>
-                  <TableCell className={cn("text-right", isSelected(item.name) ? "text-accent-foreground" : "")}>{item.videos}</TableCell>
+                  <TableCell className={cn("text-right", isSelected(item.name) ? "text-accent-foreground" : "")}>{item.uploads}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -106,9 +109,9 @@ export function PerformanceRankings({ dateRange, selectedSeller }: PerformanceRa
       </Card>
       <Card>
         <CardHeader>
-          <CardTitle className="font-headline">SNS Distribution Ranking</CardTitle>
+          <CardTitle className="font-headline">Compliance Approval Ranking</CardTitle>
           <CardDescription>
-            Top 5 sales representatives by SNS shares.
+            Top 5 sellers by compliance approvals.
              {dateRange?.from && <div className="text-xs text-muted-foreground pt-1">{getDateRangeText()}</div>}
           </CardDescription>
         </CardHeader>
@@ -118,17 +121,17 @@ export function PerformanceRankings({ dateRange, selectedSeller }: PerformanceRa
               <TableRow>
                 <TableHead>Rank</TableHead>
                 <TableHead>Name</TableHead>
-                <TableHead className="text-right">Shares</TableHead>
+                <TableHead className="text-right">Approvals</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {snsRanking.map((item) => (
-                <TableRow key={item.rank} className={cn(isSelected(item.name) && "bg-accent")}>
+              {approvalRanking.slice(0, 5).map((item) => (
+                <TableRow key={item.name} className={cn(isSelected(item.name) && "bg-accent")}>
                   <TableCell>
                     <Badge variant={isSelected(item.name) ? "default" : "secondary"}>{item.rank}</Badge>
                   </TableCell>
                   <TableCell className={cn("font-medium", isSelected(item.name) ? "text-accent-foreground" : "")}>{item.name}</TableCell>
-                  <TableCell className={cn("text-right", isSelected(item.name) ? "text-accent-foreground" : "")}>{item.shares.toLocaleString()}</TableCell>
+                  <TableCell className={cn("text-right", isSelected(item.name) ? "text-accent-foreground" : "")}>{item.approvals}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

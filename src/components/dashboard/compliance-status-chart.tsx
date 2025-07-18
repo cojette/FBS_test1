@@ -22,57 +22,47 @@ import {
 } from "@/components/ui/chart"
 
 const initialData = [
-  { reviewType: "CFPB - UDAAP", videos: 45, fill: "hsl(var(--chart-1))" },
-  { reviewType: "FTC - Truth-in-Advertising", videos: 82, fill: "hsl(var(--chart-2))" },
-  { reviewType: "SEC - Anti-Fraud", videos: 65, fill: "hsl(var(--chart-3))" },
-  { reviewType: "FINRA - Rule 2210", videos: 53, fill: "hsl(var(--chart-4))" },
-  { reviewType: "OCC - Fair Lending", videos: 30, fill: "hsl(var(--chart-5))" },
+  { status: "Passed", count: 52, fill: "hsl(var(--chart-1))" },
+  { status: "Failed", count: 6, fill: "hsl(var(--chart-2))" },
+  { status: "Pending", count: 12, fill: "hsl(var(--chart-3))" },
 ]
 
 const chartConfig = {
-  videos: {
+  count: {
     label: "Videos",
   },
-  "CFPB - UDAAP": {
-    label: "CFPB - UDAAP",
+  "Passed": {
+    label: "Passed",
     color: "hsl(var(--chart-1))",
   },
-  "FTC - Truth-in-Advertising": {
-    label: "FTC - Truth-in-Advertising",
+  "Failed": {
+    label: "Failed",
     color: "hsl(var(--chart-2))",
   },
-  "SEC - Anti-Fraud": {
-    label: "SEC - Anti-Fraud",
+  "Pending": {
+    label: "Pending",
     color: "hsl(var(--chart-3))",
-  },
-  "FINRA - Rule 2210": {
-    label: "FINRA - Rule 2210",
-    color: "hsl(var(--chart-4))",
-  },
-  "OCC - Fair Lending": {
-    label: "OCC - Fair Lending",
-    color: "hsl(var(--chart-5))",
   },
 }
 
-interface ReviewAnalyticsChartProps {
+interface ComplianceStatusChartProps {
   dateRange?: DateRange;
 }
 
-export function ReviewAnalyticsChart({ dateRange }: ReviewAnalyticsChartProps) {
+export function ComplianceStatusChart({ dateRange }: ComplianceStatusChartProps) {
   const [chartData, setChartData] = useState(initialData);
 
   useEffect(() => {
     if (dateRange?.from) {
        setChartData(initialData.map(item => ({
         ...item,
-        videos: Math.floor(Math.random() * 90) + 10,
+        count: Math.floor(Math.random() * 60) + 5,
       })));
     }
   }, [dateRange]);
 
   const totalVideos = React.useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.videos, 0)
+    return chartData.reduce((acc, curr) => acc + curr.count, 0)
   }, [chartData])
   
   const getDateRangeText = () => {
@@ -85,8 +75,8 @@ export function ReviewAnalyticsChart({ dateRange }: ReviewAnalyticsChartProps) {
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
-        <CardTitle className="font-headline">Compliance Review Analytics</CardTitle>
-        <CardDescription>Breakdown by key compliance checks</CardDescription>
+        <CardTitle className="font-headline">Compliance Status</CardTitle>
+        <CardDescription>Breakdown of your videos</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
@@ -100,19 +90,19 @@ export function ReviewAnalyticsChart({ dateRange }: ReviewAnalyticsChartProps) {
             />
             <Pie
               data={chartData}
-              dataKey="videos"
-              nameKey="reviewType"
-              innerRadius={60}
+              dataKey="count"
+              nameKey="status"
+              innerRadius={50}
               strokeWidth={5}
               labelLine={false}
               label={({ percent, name }) => `${(percent * 100).toFixed(0)}%`}
             >
                {chartData.map((entry) => (
-                  <Cell key={`cell-${entry.reviewType}`} fill={entry.fill} />
+                  <Cell key={`cell-${entry.status}`} fill={entry.fill} />
                 ))}
             </Pie>
             <ChartLegend
-              content={<ChartLegendContent nameKey="reviewType" />}
+              content={<ChartLegendContent nameKey="status" />}
               className="[&_.recharts-legend-item-text]:text-xs"
             />
           </PieChart>
@@ -121,11 +111,11 @@ export function ReviewAnalyticsChart({ dateRange }: ReviewAnalyticsChartProps) {
       <CardFooter className="flex-col gap-2 text-sm">
         <div className="flex w-full items-center justify-center text-center">
           <span className="text-muted-foreground">
-            Total {totalVideos} videos reviewed
+            Total {totalVideos} videos processed
           </span>
         </div>
         <div className="leading-none text-muted-foreground">
-          Showing total videos reviewed {getDateRangeText()}
+          Showing data {getDateRangeText()}
         </div>
       </CardFooter>
     </Card>
