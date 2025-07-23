@@ -23,16 +23,8 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { DashboardTab } from '@/app/page';
 import { ScrollArea } from '../ui/scroll-area';
-import { Users } from 'lucide-react';
+import { sellers } from '@/lib/data';
 
-const sellers = [
-  "Minjun Kim", "Seoyeon Lee", "Doyun Park", "Jiwu Choi", "Haeun Jeong",
-  "Yejun Song", "Somin Han", "Eunwoo Lim", "Jiho Yoon", "Sia Kang",
-  "Liam Smith", "Olivia Johnson", "Noah Williams", "Emma Brown", "Oliver Jones",
-  "Ava Garcia", "Elijah Miller", "Sophia Davis", "James Rodriguez", "Isabella Martinez",
-  "Lucas Hernandez", "Mia Lopez", "Mason Gonzalez", "Amelia Wilson", "Ethan Anderson",
-  "Harper Thomas", "Logan Taylor", "Evelyn Moore", "Aiden Jackson", "Abigail Martin"
-];
 
 interface HeaderProps {
   activeTab: DashboardTab;

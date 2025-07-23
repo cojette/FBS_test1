@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Legend, Tooltip } from "recharts"
 import type { DateRange } from "react-day-picker";
 import { format } from "date-fns";
+import { ChevronDown } from "lucide-react";
 
 import {
   Card,
@@ -16,44 +17,37 @@ import {
 import {
   ChartContainer
 } from "@/components/ui/chart"
-
-const initialData = [
-  { name: 'Minjun K.', uploaded: 58, approved: 52, shared: 45 },
-  { name: 'Seoyeon L.', uploaded: 52, approved: 48, shared: 42 },
-  { name: 'Doyun P.', uploaded: 45, approved: 41, shared: 35 },
-  { name: 'Jiwu C.', uploaded: 41, approved: 35, shared: 28 },
-  { name: 'Haeun J.', uploaded: 38, approved: 36, shared: 31 },
-  { name: 'Yejun S.', uploaded: 35, approved: 31, shared: 25 },
-  { name: 'Somin H.', uploaded: 32, approved: 28, shared: 22 },
-  { name: 'Eunwoo L.', uploaded: 29, approved: 25, shared: 20 },
-  { name: 'Jiho Y.', uploaded: 26, approved: 22, shared: 18 },
-  { name: 'Sia K.', uploaded: 23, approved: 20, shared: 15 },
-];
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { sellers, generateSellerData } from "@/lib/data";
 
 interface SellerPerformanceChartProps {
   dateRange?: DateRange;
 }
 
 export function SellerPerformanceChart({ dateRange }: SellerPerformanceChartProps) {
-  const [chartData, setChartData] = useState(initialData);
+  const [selectedSellers, setSelectedSellers] = useState<string[]>(sellers.slice(0, 5));
+  const [chartData, setChartData] = useState<any[]>([]);
 
   useEffect(() => {
-    if(dateRange?.from) {
-      setChartData(initialData.map(item => {
-        const uploaded = Math.floor(Math.random() * 60) + 10;
-        const approved = Math.floor(uploaded * (0.8 + Math.random() * 0.2));
-        const shared = Math.floor(approved * (0.7 + Math.random() * 0.25));
-        return {
-          ...item,
-          uploaded,
-          approved,
-          shared
-        };
-      }));
-    }
-  }, [dateRange]);
+    const data = selectedSellers.map(seller => generateSellerData(seller));
+    setChartData(data);
+  }, [dateRange, selectedSellers]);
 
-    const getDateRangeText = () => {
+  const handleSellerSelection = (seller: string) => {
+    setSelectedSellers(prev => 
+      prev.includes(seller) 
+        ? prev.filter(s => s !== seller) 
+        : [...prev, seller]
+    );
+  };
+
+  const getDateRangeText = () => {
     if (!dateRange?.from) return "for all time.";
     const from = format(dateRange.from, "LLL dd, y");
     const to = dateRange.to ? format(dateRange.to, "LLL dd, y") : null;
@@ -61,12 +55,33 @@ export function SellerPerformanceChart({ dateRange }: SellerPerformanceChartProp
   }
   return (
     <Card>
-      <CardHeader>
-        <CardTitle className="font-headline">Seller Performance</CardTitle>
-        <CardDescription>
-          Video uploads, compliance approvals, and shares by top sellers.
-        </CardDescription>
-        <CardDescription className="text-xs text-muted-foreground pt-1">Showing data {getDateRangeText()}</CardDescription>
+      <CardHeader className="flex flex-row items-center justify-between">
+        <div className="flex flex-col">
+          <CardTitle className="font-headline">Seller Performance</CardTitle>
+          <CardDescription>
+            Video uploads, compliance approvals, and shares by seller.
+          </CardDescription>
+          <CardDescription className="text-xs text-muted-foreground pt-1">Showing data {getDateRangeText()}</CardDescription>
+        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline">
+              Select Sellers <ChevronDown className="ml-2 h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56 h-72 overflow-y-auto">
+            {sellers.map(seller => (
+              <DropdownMenuCheckboxItem
+                key={seller}
+                checked={selectedSellers.includes(seller)}
+                onSelect={(e) => e.preventDefault()}
+                onClick={() => handleSellerSelection(seller)}
+              >
+                {seller}
+              </DropdownMenuCheckboxItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
       </CardHeader>
       <CardContent>
         <ChartContainer config={{}} className="min-h-[300px] w-full">
