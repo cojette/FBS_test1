@@ -23,6 +23,11 @@ const initialData = [
   { name: 'Doyun P.', uploaded: 45, approved: 41, shared: 35 },
   { name: 'Jiwu C.', uploaded: 41, approved: 35, shared: 28 },
   { name: 'Haeun J.', uploaded: 38, approved: 36, shared: 31 },
+  { name: 'Yejun S.', uploaded: 35, approved: 31, shared: 25 },
+  { name: 'Somin H.', uploaded: 32, approved: 28, shared: 22 },
+  { name: 'Eunwoo L.', uploaded: 29, approved: 25, shared: 20 },
+  { name: 'Jiho Y.', uploaded: 26, approved: 22, shared: 18 },
+  { name: 'Sia K.', uploaded: 23, approved: 20, shared: 15 },
 ];
 
 interface SellerPerformanceChartProps {

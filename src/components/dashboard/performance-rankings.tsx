@@ -45,11 +45,9 @@ const initialApprovalRanking = generateInitialRankings().sort((a, b) => b.approv
 interface PerformanceRankingsProps {
   dateRange?: DateRange;
   selectedSeller?: string;
-  comparisonSeller?: string;
-  isComparing?: boolean;
 }
 
-export function PerformanceRankings({ dateRange, selectedSeller, comparisonSeller, isComparing }: PerformanceRankingsProps) {
+export function PerformanceRankings({ dateRange, selectedSeller }: PerformanceRankingsProps) {
   const [uploadRanking, setUploadRanking] = useState(initialUploadRanking);
   const [approvalRanking, setApprovalRanking] = useState(initialApprovalRanking);
 
@@ -76,28 +74,16 @@ export function PerformanceRankings({ dateRange, selectedSeller, comparisonSelle
   }
 
   const getRowClass = (name: string) => {
-    if (isComparing) {
-      if (name === selectedSeller) return "bg-primary/10";
-      if (name === comparisonSeller) return "bg-accent";
-    }
     if (name === selectedSeller) return "bg-accent";
     return "";
   };
 
   const getBadgeVariant = (name: string) => {
-    if (isComparing) {
-      if (name === selectedSeller) return "default";
-      if (name === comparisonSeller) return "secondary";
-    }
     if (name === selectedSeller) return "default";
     return "secondary";
   };
   
   const getCellClass = (name: string) => {
-     if (isComparing) {
-      if (name === selectedSeller) return "text-primary-foreground";
-      if (name === comparisonSeller) return "text-accent-foreground";
-    }
     if (name === selectedSeller) return "text-accent-foreground";
     return "";
   }
@@ -109,7 +95,7 @@ export function PerformanceRankings({ dateRange, selectedSeller, comparisonSelle
         <CardHeader>
           <CardTitle className="font-headline">Video Upload Ranking</CardTitle>
           <CardDescription>
-            Top 5 sellers by video uploads.
+            Top 10 sellers by video uploads.
             {dateRange?.from && <div className="text-xs text-muted-foreground pt-1">{getDateRangeText()}</div>}
           </CardDescription>
         </CardHeader>
@@ -123,7 +109,7 @@ export function PerformanceRankings({ dateRange, selectedSeller, comparisonSelle
               </TableRow>
             </TableHeader>
             <TableBody>
-              {uploadRanking.slice(0, 5).map((item) => (
+              {uploadRanking.slice(0, 10).map((item) => (
                 <TableRow key={item.name} className={getRowClass(item.name)}>
                   <TableCell>
                     <Badge variant={getBadgeVariant(item.name)}>{item.rank}</Badge>
@@ -140,7 +126,7 @@ export function PerformanceRankings({ dateRange, selectedSeller, comparisonSelle
         <CardHeader>
           <CardTitle className="font-headline">Compliance Approval Ranking</CardTitle>
           <CardDescription>
-            Top 5 sellers by compliance approvals.
+            Top 10 sellers by compliance approvals.
              {dateRange?.from && <div className="text-xs text-muted-foreground pt-1">{getDateRangeText()}</div>}
           </CardDescription>
         </CardHeader>
@@ -154,7 +140,7 @@ export function PerformanceRankings({ dateRange, selectedSeller, comparisonSelle
               </TableRow>
             </TableHeader>
             <TableBody>
-              {approvalRanking.slice(0, 5).map((item) => (
+              {approvalRanking.slice(0, 10).map((item) => (
                 <TableRow key={item.name} className={getRowClass(item.name)}>
                   <TableCell>
                     <Badge variant={getBadgeVariant(item.name)}>{item.rank}</Badge>

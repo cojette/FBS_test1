@@ -39,10 +39,6 @@ interface HeaderProps {
   onTabChange: (tab: DashboardTab) => void;
   selectedSeller: string;
   onSellerChange: (seller: string) => void;
-  comparisonSeller?: string;
-  onComparisonSellerChange: (seller?: string) => void;
-  isComparing: boolean;
-  onCompareToggle: (isComparing: boolean) => void;
   children?: React.ReactNode;
 }
 
@@ -51,23 +47,8 @@ export function Header({
   onTabChange, 
   selectedSeller,
   onSellerChange,
-  comparisonSeller,
-  onComparisonSellerChange,
-  isComparing,
-  onCompareToggle,
   children 
 }: HeaderProps) {
-  const availableComparisonSellers = sellers.filter(s => s !== selectedSeller);
-
-  React.useEffect(() => {
-    if (isComparing && !comparisonSeller) {
-      onComparisonSellerChange(availableComparisonSellers[0]);
-    }
-     if (!isComparing) {
-      onComparisonSellerChange(undefined);
-    }
-  }, [isComparing, selectedSeller, comparisonSeller, onComparisonSellerChange, availableComparisonSellers]);
-
 
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-card/80 backdrop-blur-sm px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
@@ -97,28 +78,6 @@ export function Header({
                 </ScrollArea>
               </SelectContent>
             </Select>
-            <Button 
-                variant={isComparing ? "secondary" : "outline"} 
-                size="sm"
-                onClick={() => onCompareToggle(!isComparing)}
-            >
-                <Users className="mr-2 h-4 w-4" />
-                Compare
-            </Button>
-            {isComparing && (
-               <Select value={comparisonSeller} onValueChange={onComparisonSellerChange}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Compare with..." />
-                </SelectTrigger>
-                <SelectContent>
-                  <ScrollArea className="h-72">
-                    {availableComparisonSellers.map(seller => (
-                      <SelectItem key={seller} value={seller}>{seller}</SelectItem>
-                    ))}
-                  </ScrollArea>
-                </SelectContent>
-              </Select>
-            )}
            </div>
         )}
       </div>
