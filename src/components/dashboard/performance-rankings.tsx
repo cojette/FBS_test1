@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import {
   Card,
@@ -44,9 +45,11 @@ const initialApprovalRanking = generateInitialRankings().sort((a, b) => b.approv
 interface PerformanceRankingsProps {
   dateRange?: DateRange;
   selectedSeller?: string;
+  comparisonSeller?: string;
+  isComparing?: boolean;
 }
 
-export function PerformanceRankings({ dateRange, selectedSeller }: PerformanceRankingsProps) {
+export function PerformanceRankings({ dateRange, selectedSeller, comparisonSeller, isComparing }: PerformanceRankingsProps) {
   const [uploadRanking, setUploadRanking] = useState(initialUploadRanking);
   const [approvalRanking, setApprovalRanking] = useState(initialApprovalRanking);
 
@@ -72,7 +75,33 @@ export function PerformanceRankings({ dateRange, selectedSeller }: PerformanceRa
     return to ? `${from} - ${to}` : from;
   }
 
-  const isSelected = (name: string) => name === selectedSeller;
+  const getRowClass = (name: string) => {
+    if (isComparing) {
+      if (name === selectedSeller) return "bg-primary/10";
+      if (name === comparisonSeller) return "bg-accent";
+    }
+    if (name === selectedSeller) return "bg-accent";
+    return "";
+  };
+
+  const getBadgeVariant = (name: string) => {
+    if (isComparing) {
+      if (name === selectedSeller) return "default";
+      if (name === comparisonSeller) return "secondary";
+    }
+    if (name === selectedSeller) return "default";
+    return "secondary";
+  };
+  
+  const getCellClass = (name: string) => {
+     if (isComparing) {
+      if (name === selectedSeller) return "text-primary-foreground";
+      if (name === comparisonSeller) return "text-accent-foreground";
+    }
+    if (name === selectedSeller) return "text-accent-foreground";
+    return "";
+  }
+
 
   return (
     <div className="space-y-8">
@@ -95,12 +124,12 @@ export function PerformanceRankings({ dateRange, selectedSeller }: PerformanceRa
             </TableHeader>
             <TableBody>
               {uploadRanking.slice(0, 5).map((item) => (
-                <TableRow key={item.name} className={cn(isSelected(item.name) && "bg-accent")}>
+                <TableRow key={item.name} className={getRowClass(item.name)}>
                   <TableCell>
-                    <Badge variant={isSelected(item.name) ? "default" : "secondary"}>{item.rank}</Badge>
+                    <Badge variant={getBadgeVariant(item.name)}>{item.rank}</Badge>
                   </TableCell>
-                  <TableCell className={cn("font-medium", isSelected(item.name) ? "text-accent-foreground" : "")}>{item.name}</TableCell>
-                  <TableCell className={cn("text-right", isSelected(item.name) ? "text-accent-foreground" : "")}>{item.uploads}</TableCell>
+                  <TableCell className={cn("font-medium", getCellClass(item.name))}>{item.name}</TableCell>
+                  <TableCell className={cn("text-right", getCellClass(item.name))}>{item.uploads}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -126,12 +155,12 @@ export function PerformanceRankings({ dateRange, selectedSeller }: PerformanceRa
             </TableHeader>
             <TableBody>
               {approvalRanking.slice(0, 5).map((item) => (
-                <TableRow key={item.name} className={cn(isSelected(item.name) && "bg-accent")}>
+                <TableRow key={item.name} className={getRowClass(item.name)}>
                   <TableCell>
-                    <Badge variant={isSelected(item.name) ? "default" : "secondary"}>{item.rank}</Badge>
+                    <Badge variant={getBadgeVariant(item.name)}>{item.rank}</Badge>
                   </TableCell>
-                  <TableCell className={cn("font-medium", isSelected(item.name) ? "text-accent-foreground" : "")}>{item.name}</TableCell>
-                  <TableCell className={cn("text-right", isSelected(item.name) ? "text-accent-foreground" : "")}>{item.approvals}</TableCell>
+                  <TableCell className={cn("font-medium", getCellClass(item.name))}>{item.name}</TableCell>
+                  <TableCell className={cn("text-right", getCellClass(item.name))}>{item.approvals}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

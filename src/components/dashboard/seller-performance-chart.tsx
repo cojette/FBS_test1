@@ -1,3 +1,4 @@
+
 "use client"
 
 import React, { useEffect, useState } from "react";
@@ -17,11 +18,11 @@ import {
 } from "@/components/ui/chart"
 
 const initialData = [
-  { name: 'Minjun K.', uploaded: 58, approved: 52 },
-  { name: 'Seoyeon L.', uploaded: 52, approved: 48 },
-  { name: 'Doyun P.', uploaded: 45, approved: 41 },
-  { name: 'Jiwu C.', uploaded: 41, approved: 35 },
-  { name: 'Haeun J.', uploaded: 38, approved: 36 },
+  { name: 'Minjun K.', uploaded: 58, approved: 52, shared: 45 },
+  { name: 'Seoyeon L.', uploaded: 52, approved: 48, shared: 42 },
+  { name: 'Doyun P.', uploaded: 45, approved: 41, shared: 35 },
+  { name: 'Jiwu C.', uploaded: 41, approved: 35, shared: 28 },
+  { name: 'Haeun J.', uploaded: 38, approved: 36, shared: 31 },
 ];
 
 interface SellerPerformanceChartProps {
@@ -36,10 +37,12 @@ export function SellerPerformanceChart({ dateRange }: SellerPerformanceChartProp
       setChartData(initialData.map(item => {
         const uploaded = Math.floor(Math.random() * 60) + 10;
         const approved = Math.floor(uploaded * (0.8 + Math.random() * 0.2));
+        const shared = Math.floor(approved * (0.7 + Math.random() * 0.25));
         return {
           ...item,
           uploaded,
           approved,
+          shared
         };
       }));
     }
@@ -56,7 +59,7 @@ export function SellerPerformanceChart({ dateRange }: SellerPerformanceChartProp
       <CardHeader>
         <CardTitle className="font-headline">Seller Performance</CardTitle>
         <CardDescription>
-          Video uploads and compliance approvals by top sellers.
+          Video uploads, compliance approvals, and shares by top sellers.
         </CardDescription>
         <CardDescription className="text-xs text-muted-foreground pt-1">Showing data {getDateRangeText()}</CardDescription>
       </CardHeader>
@@ -72,6 +75,7 @@ export function SellerPerformanceChart({ dateRange }: SellerPerformanceChartProp
             <Legend />
             <Bar dataKey="uploaded" fill="hsl(var(--chart-2))" name="Uploaded" radius={[4, 4, 0, 0]} />
             <Bar dataKey="approved" fill="hsl(var(--chart-1))" name="Approved" radius={[4, 4, 0, 0]}/>
+            <Bar dataKey="shared" fill="hsl(var(--chart-3))" name="Shared" radius={[4, 4, 0, 0]}/>
           </BarChart>
         </ChartContainer>
       </CardContent>

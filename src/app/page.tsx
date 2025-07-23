@@ -26,6 +26,16 @@ export default function Home() {
     to: new Date(),
   });
   const [selectedSeller, setSelectedSeller] = React.useState<string>("Minjun Kim");
+  const [comparisonSeller, setComparisonSeller] = React.useState<string | undefined>(undefined);
+  const [isComparing, setIsComparing] = React.useState(false);
+
+  React.useEffect(() => {
+    if (activeTab === 'headquarters') {
+      setIsComparing(false);
+      setComparisonSeller(undefined);
+    }
+  }, [activeTab]);
+
 
   return (
     <SidebarProvider>
@@ -39,6 +49,10 @@ export default function Home() {
             onTabChange={setActiveTab}
             selectedSeller={selectedSeller}
             onSellerChange={setSelectedSeller}
+            comparisonSeller={comparisonSeller}
+            onComparisonSellerChange={setComparisonSeller}
+            isComparing={isComparing}
+            onCompareToggle={setIsComparing}
           >
              <DateRangePicker date={date} onDateChange={setDate} />
           </Header>
@@ -131,7 +145,12 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
-                    <PerformanceRankings dateRange={date} selectedSeller={selectedSeller}/>
+                    <PerformanceRankings 
+                      dateRange={date} 
+                      selectedSeller={selectedSeller}
+                      comparisonSeller={comparisonSeller}
+                      isComparing={isComparing}
+                    />
                   </div>
                 </div>
               </>
