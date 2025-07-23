@@ -1,3 +1,4 @@
+
 "use client"
 
 import React, { useEffect, useState } from "react";
@@ -34,19 +35,21 @@ const chartConfig = {
 
 interface VideoSharingChartProps {
   dateRange?: DateRange;
+  seller?: string;
 }
 
-export function VideoSharingChart({ dateRange }: VideoSharingChartProps) {
+export function VideoSharingChart({ dateRange, seller }: VideoSharingChartProps) {
     const [chartData, setChartData] = useState(initialData);
 
     useEffect(() => {
-        if (dateRange?.from) {
-            setChartData(initialData.map(item => ({
-                ...item,
-                shares: Math.floor(Math.random() * 50) + 5,
-            })));
-        }
-    }, [dateRange]);
+        // This effect runs when dateRange or seller changes
+        const sellerHash = seller ? seller.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) : 1;
+        setChartData(initialData.map(item => {
+            const baseShares = item.shares;
+            const newShares = Math.floor(baseShares * (0.5 + (sellerHash % 100) / 100) + Math.random() * 5);
+            return { ...item, shares: newShares };
+        }));
+    }, [dateRange, seller]);
 
   const getDateRangeText = () => {
     if (!dateRange?.from) return "for all time.";

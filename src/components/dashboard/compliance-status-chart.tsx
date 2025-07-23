@@ -1,3 +1,4 @@
+
 "use client"
 
 import React, { useEffect, useState } from "react";
@@ -22,7 +23,7 @@ import {
 
 const initialData = [
   { status: "Passed", count: 52, fill: "hsl(var(--chart-1))" },
-  { status: "Failed", count: 6, fill: "hsl(var(--chart-2))" },
+  { status: "Failed", count: 6, fill: "hsl(var(--destructive))" },
   { status: "Pending", count: 12, fill: "hsl(var(--chart-3))" },
 ]
 
@@ -36,7 +37,7 @@ const chartConfig = {
   },
   "Failed": {
     label: "Failed",
-    color: "hsl(var(--chart-2))",
+    color: "hsl(var(--destructive))",
   },
   "Pending": {
     label: "Pending",
@@ -46,19 +47,22 @@ const chartConfig = {
 
 interface ComplianceStatusChartProps {
   dateRange?: DateRange;
+  seller?: string;
 }
 
-export function ComplianceStatusChart({ dateRange }: ComplianceStatusChartProps) {
+export function ComplianceStatusChart({ dateRange, seller }: ComplianceStatusChartProps) {
   const [chartData, setChartData] = useState(initialData);
 
   useEffect(() => {
-    if (dateRange?.from) {
-       setChartData(initialData.map(item => ({
-        ...item,
-        count: Math.floor(Math.random() * 60) + 5,
-      })));
-    }
-  }, [dateRange]);
+    // This effect runs when dateRange or seller changes
+    const sellerHash = seller ? seller.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) : 1;
+    setChartData(initialData.map(item => {
+      const baseCount = item.count;
+      // Generate a consistent random-like value based on the seller's name
+      const newCount = Math.floor(baseCount * (0.5 + (sellerHash % 100) / 100) + Math.random() * 10);
+      return { ...item, count: newCount };
+    }));
+  }, [dateRange, seller]);
 
   const totalVideos = React.useMemo(() => {
     return chartData.reduce((acc, curr) => acc + curr.count, 0)

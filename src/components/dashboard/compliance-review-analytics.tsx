@@ -1,3 +1,4 @@
+
 "use client"
 
 import React, { useEffect, useState } from "react"
@@ -31,20 +32,21 @@ const chartConfig = {
 
 interface ComplianceReviewAnalyticsProps {
   dateRange?: DateRange;
+  seller?: string;
 }
 
-export function ComplianceReviewAnalytics({ dateRange }: ComplianceReviewAnalyticsProps) {
+export function ComplianceReviewAnalytics({ dateRange, seller }: ComplianceReviewAnalyticsProps) {
   const [chartData, setChartData] = useState(initialData);
 
   useEffect(() => {
-    if (dateRange?.from) {
-      setChartData(initialData.map(item => ({
-        ...item,
-        "Checks": Math.floor(Math.random() * 100) + 20,
-        "Videos": Math.floor(Math.random() * 80) + 10,
-      })));
-    }
-  }, [dateRange]);
+    // This effect runs when dateRange or seller changes
+    const sellerHash = seller ? seller.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) : 1;
+    setChartData(initialData.map(item => ({
+      ...item,
+      "Checks": Math.floor(Math.random() * 100 * (seller ? (sellerHash % 50)/100 + 0.8 : 1) ) + 20,
+      "Videos": Math.floor(Math.random() * 80 * (seller ? (sellerHash % 50)/100 + 0.8 : 1)) + 10,
+    })));
+  }, [dateRange, seller]);
 
   const getDateRangeText = () => {
     if (!dateRange?.from) return "for all time.";

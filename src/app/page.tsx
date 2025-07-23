@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from 'react';
@@ -6,7 +7,7 @@ import { SidebarNav } from '@/components/sidebar-nav';
 import { Header } from '@/components/dashboard/header';
 import { StatsCard } from '@/components/dashboard/stats-card';
 import { PerformanceRankings } from '@/components/dashboard/performance-rankings';
-import { Video, ShieldCheck, Clock, CheckCircle, XCircle, Send, Package, BarChart, FileText, Share2, Users, Target } from 'lucide-react';
+import { Video, ShieldCheck, Clock, CheckCircle, XCircle, Send, Package, BarChart, FileText, Share2, Users, Target, CalendarCheck, PlayCircle, MessageSquare } from 'lucide-react';
 import { SellerPerformanceChart } from '@/components/dashboard/seller-performance-chart';
 import { DateRangePicker } from '@/components/dashboard/date-range-picker';
 import type { DateRange } from 'react-day-picker';
@@ -67,18 +68,18 @@ export default function Home() {
                     dateRange={date}
                   />
                    <StatsCard
-                    title="Total Products Registered"
-                    value="85"
-                    icon={Package}
-                    description="All active products"
+                    title="Meetings Booked"
+                    value="215"
+                    icon={CalendarCheck}
+                    description="Total meetings scheduled"
                     dateRange={date}
                   />
                 </div>
                 <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
                   <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
+                     <ComplianceReviewAnalytics dateRange={date} />
                      <SellerPerformanceChart dateRange={date}/>
                      <ProductPerformanceChart dateRange={date}/>
-                     <ComplianceReviewAnalytics dateRange={date}/>
                   </div>
                   <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
                      <PerformanceRankings dateRange={date} selectedSeller={selectedSeller}/>
@@ -94,36 +95,40 @@ export default function Home() {
                     icon={Video}
                     description="Total videos you uploaded"
                     dateRange={date}
+                    seller={selectedSeller}
                   />
                   <StatsCard
-                    title="My Compliance Rate"
-                    value="90%"
-                    icon={ShieldCheck}
-                    description="Your approved videos"
+                    title="My Videos Watched"
+                    value="1,280"
+                    icon={PlayCircle}
+                    description="Total views on your videos"
                     dateRange={date}
+                     seller={selectedSeller}
                   />
                    <StatsCard
-                    title="My Registered Products"
-                    value="12"
-                    icon={Package}
-                    description="Products you manage"
+                    title="My Meetings Booked"
+                    value="23"
+                    icon={CalendarCheck}
+                    description="Meetings you've scheduled"
                     dateRange={date}
+                     seller={selectedSeller}
                   />
                    <StatsCard
-                    title="Videos Shared (SNS)"
-                    value="35"
-                    icon={Send}
-                    description="Videos sent via SNS"
+                    title="My Chat Messages"
+                    value="157"
+                    icon={MessageSquare}
+                    description="Messages sent to buyers"
                     dateRange={date}
+                     seller={selectedSeller}
                   />
                 </div>
                 <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
                   <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
+                    <ComplianceReviewAnalytics dateRange={date} seller={selectedSeller}/>
                     <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
-                      <ComplianceStatusChart dateRange={date}/>
-                      <VideoSharingChart dateRange={date}/>
+                      <ComplianceStatusChart dateRange={date} seller={selectedSeller}/>
+                      <VideoSharingChart dateRange={date} seller={selectedSeller}/>
                     </div>
-                     <ComplianceReviewAnalytics dateRange={date}/>
                   </div>
                   <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
                     <PerformanceRankings dateRange={date} selectedSeller={selectedSeller}/>

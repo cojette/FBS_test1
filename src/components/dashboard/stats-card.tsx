@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
@@ -16,30 +17,36 @@ interface StatsCardProps {
   icon: LucideIcon;
   description: string;
   dateRange?: DateRange;
+  seller?: string;
 }
 
-export function StatsCard({ title, value: initialValue, icon: Icon, description, dateRange }: StatsCardProps) {
+export function StatsCard({ title, value: initialValue, icon: Icon, description, dateRange, seller }: StatsCardProps) {
   const [value, setValue] = useState(initialValue);
 
   useEffect(() => {
-    if (dateRange?.from) {
-      const isPercentage = initialValue.includes('%');
-      let newValue: string;
-      if (isPercentage) {
-        const randomPercentage = (Math.random() * 10 + 88).toFixed(1);
-        newValue = `${randomPercentage}%`;
-      } else {
-        const numericValue = parseInt(initialValue.replace(/,/g, ''), 10);
-        if (isNaN(numericValue)) {
-            setValue(initialValue);
-            return;
-        }
-        const randomFactor = 0.8 + Math.random() * 0.4; // 80% to 120%
-        newValue = Math.floor(numericValue * randomFactor).toLocaleString();
+    // This effect runs when dateRange or seller changes
+    const isPercentage = initialValue.includes('%');
+    let newValue: string;
+
+    // A simple hash function to generate a consistent "random" value for a seller
+    const sellerHash = seller ? seller.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) : 1;
+    
+    if (isPercentage) {
+      const randomPercentage = (85 + (sellerHash % 15) + (Math.random() * 5)).toFixed(1);
+      newValue = `${randomPercentage}%`;
+    } else {
+      const numericValue = parseInt(initialValue.replace(/,/g, ''), 10);
+      if (isNaN(numericValue)) {
+          setValue(initialValue);
+          return;
       }
-      setValue(newValue);
+      // Use a combination of a base value, seller-specific hash, and a small random factor
+      const randomFactor = 0.8 + (sellerHash % 40) / 100 + (Math.random() * 0.2); // 80% to 140%
+      newValue = Math.floor(numericValue * randomFactor).toLocaleString();
     }
-  }, [dateRange, initialValue]);
+    setValue(newValue);
+  // Using seller in dependency array to re-trigger randomization
+  }, [dateRange, initialValue, seller]);
 
 
   const getDateRangeText = () => {
