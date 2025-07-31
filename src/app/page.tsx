@@ -82,13 +82,12 @@ export default function Home() {
               </>
             )}
             {activeTab === 'seller-performance' && (
-               <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-2">
-                  <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
+               <div className="flex flex-col gap-4 md:gap-8">
+                  <SellerPerformanceChart dateRange={date} />
+                  <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-4">
                      <PerformanceRankings dateRange={date} selectedSeller={selectedSeller} metric="uploads"/>
-                     <PerformanceRankings dateRange={date} selectedSeller={selectedSeller} metric="shares"/>
-                  </div>
-                  <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
                      <PerformanceRankings dateRange={date} selectedSeller={selectedSeller} metric="approvals"/>
+                     <PerformanceRankings dateRange={date} selectedSeller={selectedSeller} metric="shares"/>
                      <PerformanceRankings dateRange={date} selectedSeller={selectedSeller} metric="meetings"/>
                   </div>
                 </div>
