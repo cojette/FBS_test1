@@ -17,7 +17,7 @@ import { VideoSharingChart } from '@/components/dashboard/video-sharing-chart';
 import { ComplianceReviewAnalytics } from '@/components/dashboard/compliance-review-analytics';
 import { ProductPerformanceChart } from '@/components/dashboard/product-performance-chart';
 
-export type DashboardTab = 'headquarters' | 'individual';
+export type DashboardTab = 'headquarters' | 'seller-performance' | 'individual';
 
 export default function Home() {
   const [activeTab, setActiveTab] = React.useState<DashboardTab>('headquarters');
@@ -43,7 +43,7 @@ export default function Home() {
              <DateRangePicker date={date} onDateChange={setDate} />
           </Header>
           <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8 bg-background">
-            {activeTab === 'headquarters' ? (
+            {activeTab === 'headquarters' && (
               <>
                 <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
                   <StatsCard
@@ -75,18 +75,23 @@ export default function Home() {
                     dateRange={date}
                   />
                 </div>
-                <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
+                <div className="grid gap-4 md:gap-8">
+                  <ComplianceReviewAnalytics dateRange={date} />
+                  <ProductPerformanceChart dateRange={date}/>
+                </div>
+              </>
+            )}
+            {activeTab === 'seller-performance' && (
+               <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
                   <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
-                     <ComplianceReviewAnalytics dateRange={date} />
                      <SellerPerformanceChart dateRange={date}/>
-                     <ProductPerformanceChart dateRange={date}/>
                   </div>
                   <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
                      <PerformanceRankings dateRange={date} selectedSeller={selectedSeller}/>
                   </div>
                 </div>
-              </>
-            ) : (
+            )}
+            {activeTab === 'individual' && (
               <>
                  <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
                   <StatsCard

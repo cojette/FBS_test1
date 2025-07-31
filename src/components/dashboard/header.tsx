@@ -53,6 +53,7 @@ export function Header({
         >
           <TabsList>
             <TabsTrigger value="headquarters">Headquarters</TabsTrigger>
+            <TabsTrigger value="seller-performance">Seller Performance</TabsTrigger>
             <TabsTrigger value="individual">Individual</TabsTrigger>
           </TabsList>
         </Tabs>

@@ -35,7 +35,7 @@ export function SellerPerformanceChart({ dateRange }: SellerPerformanceChartProp
   const [chartData, setChartData] = useState<any[]>([]);
 
   useEffect(() => {
-    const data = selectedSellers.map(seller => generateSellerData(seller));
+    const data = selectedSellers.map(seller => generateSellerData(seller, dateRange));
     setChartData(data);
   }, [dateRange, selectedSellers]);
 
@@ -59,7 +59,7 @@ export function SellerPerformanceChart({ dateRange }: SellerPerformanceChartProp
         <div className="flex flex-col">
           <CardTitle className="font-headline">Seller Performance</CardTitle>
           <CardDescription>
-            Video uploads, compliance approvals, and shares by seller.
+            Key metrics by seller. Select sellers to compare.
           </CardDescription>
           <CardDescription className="text-xs text-muted-foreground pt-1">Showing data {getDateRangeText()}</CardDescription>
         </div>
@@ -96,6 +96,7 @@ export function SellerPerformanceChart({ dateRange }: SellerPerformanceChartProp
             <Bar dataKey="uploaded" fill="hsl(var(--chart-2))" name="Uploaded" radius={[4, 4, 0, 0]} />
             <Bar dataKey="approved" fill="hsl(var(--chart-1))" name="Approved" radius={[4, 4, 0, 0]}/>
             <Bar dataKey="shared" fill="hsl(var(--chart-3))" name="Shared" radius={[4, 4, 0, 0]}/>
+            <Bar dataKey="meetingsBooked" fill="hsl(var(--chart-4))" name="Meetings" radius={[4, 4, 0, 0]}/>
           </BarChart>
         </ChartContainer>
       </CardContent>
