@@ -75,19 +75,21 @@ export default function Home() {
                     dateRange={date}
                   />
                 </div>
-                <div className="grid gap-4 md:gap-8">
+                <div className="grid gap-4 md:gap-8 lg:grid-cols-2">
                   <ComplianceReviewAnalytics dateRange={date} />
                   <ProductPerformanceChart dateRange={date}/>
                 </div>
               </>
             )}
             {activeTab === 'seller-performance' && (
-               <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
-                  <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
-                     <SellerPerformanceChart dateRange={date}/>
+               <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-2">
+                  <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
+                     <PerformanceRankings dateRange={date} selectedSeller={selectedSeller} metric="uploads"/>
+                     <PerformanceRankings dateRange={date} selectedSeller={selectedSeller} metric="shares"/>
                   </div>
                   <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
-                     <PerformanceRankings dateRange={date} selectedSeller={selectedSeller}/>
+                     <PerformanceRankings dateRange={date} selectedSeller={selectedSeller} metric="approvals"/>
+                     <PerformanceRankings dateRange={date} selectedSeller={selectedSeller} metric="meetings"/>
                   </div>
                 </div>
             )}
@@ -139,6 +141,7 @@ export default function Home() {
                     <PerformanceRankings 
                       dateRange={date} 
                       selectedSeller={selectedSeller}
+                      metric="uploads"
                     />
                   </div>
                 </div>
