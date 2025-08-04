@@ -1,4 +1,4 @@
-# **App Name**: VeriSend Dashboard
+# **App Name**: Mosher Dashboard
 
 ## Core Features:
 
